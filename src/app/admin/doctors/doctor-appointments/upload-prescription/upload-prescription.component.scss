@@ -3,7 +3,7 @@
 .card {
   position: relative;
   &-body {
-    // background-image: url("../../../assets/images/bg-login.jpg");
+   
     background-position: center;
     border-radius: 0.42rem;
     display: flex;
@@ -41,7 +41,19 @@
           margin-bottom: 1.8rem;
           width: 10rem;
         }
+       
       }
+
+.image-container{
+  flex-direction: row;
+  display: flex;
+  .ngx-dropzone-image-preview{
+    flex-direction: row;
+    display: flex;
+  }
+}
+        
+    
       &-signup {
         text-align: center;
         margin-top: 2rem;
@@ -107,3 +119,4 @@
     align-items: center;
   }
 }
+

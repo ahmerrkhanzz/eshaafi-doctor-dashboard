@@ -1,4 +1,4 @@
-<div class="card login">
+<div class="card">
   <div class="card-body">
     <a href="javascript:;" class="close" (click)="close()">
       <svg
@@ -23,25 +23,19 @@
         <h3>Upload Prescription</h3>
       </div>
 
-      <!-- <div class="image-input image-input-outline">
-                <div class="image-input-wrapper"
-                    style="background-image: url(../../../../assets/images/records/upload-img.png)">
 
-                </div>
-               
-                <label class="btn btn-xs btn-circle" data-action="change" data-toggle="tooltip" title=""
-                    data-original-title="Change avatar">
-                    <i class="fa fa-pen icon-sm text-muted"></i>
-                    <input type="file" accept=".png, .jpg, .jpeg" />
-                    <input type=" hidden" name="profile_avatar_remove" />
-                </label>
-               
-
-                              <h4>Add File</h4>
-                     
-            </div> -->
-
-      <angular-file-uploader [config]="afuConfig"> </angular-file-uploader>
+      <ngx-dropzone (change)="onSelect($event)">
+        <ngx-dropzone-label>Drop Your Files Here</ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+    </ngx-dropzone>
+    
+    <div class="image-container">
+      <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
+        
+      </ngx-dropzone-image-preview>
+    </div>
 
       <div class="card-footer">
         <div class="row">

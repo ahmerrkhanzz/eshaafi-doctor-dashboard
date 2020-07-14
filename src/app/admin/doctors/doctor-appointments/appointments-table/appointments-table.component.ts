@@ -147,7 +147,7 @@ export class PatientsTableComponent implements OnInit {
   }
   addPrescription() {
     const modalRef = this._modalService.open(UploadPrescriptionComponent, {
-      size: "md",
+      size: "lg",
     });
     modalRef.componentInstance.name = "World";
   }
