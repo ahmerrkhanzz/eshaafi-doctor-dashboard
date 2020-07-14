@@ -3,7 +3,7 @@
 .card {
   position: relative;
   &-body {
-    // background-image: url("../../../assets/images/bg-login.jpg");
+   
     background-position: center;
     border-radius: 0.42rem;
     display: flex;
@@ -33,7 +33,7 @@
           font-weight: 500;
           margin-bottom: 0.8rem;
         }
-       
+
         p {
           color: $text-muted;
         }
@@ -41,7 +41,19 @@
           margin-bottom: 1.8rem;
           width: 10rem;
         }
+       
       }
+
+.image-container{
+  flex-direction: row;
+  display: flex;
+  .ngx-dropzone-image-preview{
+    flex-direction: row;
+    display: flex;
+  }
+}
+        
+    
       &-signup {
         text-align: center;
         margin-top: 2rem;
@@ -57,16 +69,16 @@
           }
         }
       }
-.image-input{
-  h4{
-    font-size: 1.2rem;
-    color: $text-purple;
-    font-weight: 500;
-    margin-top: 0.8rem;
-    color: $color-secondary;
-    text-align: center;
-  }
-}
+      .image-input {
+        h4 {
+          font-size: 1.2rem;
+          color: $text-purple;
+          font-weight: 500;
+          margin-top: 0.8rem;
+          color: $color-secondary;
+          text-align: center;
+        }
+      }
 
       .form-control {
         background-color: $wave-grey;
@@ -77,7 +89,6 @@
           background-color: #ebedf3;
         }
       }
-
     }
     button {
       margin: 0 auto;
@@ -85,8 +96,8 @@
       display: flex;
     }
   }
-  &-footer{
-margin-top: 3rem;
+  &-footer {
+    margin-top: 3rem;
   }
 }
 
@@ -108,3 +119,4 @@ margin-top: 3rem;
     align-items: center;
   }
 }
+

@@ -8,38 +8,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./upload-prescription.component.scss"],
 })
 export class UploadPrescriptionComponent implements OnInit {
-  afuConfig = {
-    multiple: true,
-    formatsAllowed: ".jpg,.png",
-    maxSize: "1",
-    uploadAPI:  {
-      url:"https://example-file-upload-api",
-      method:"POST",
-      headers: {
-     "Content-Type" : "text/plain;charset=UTF-8",
-     "Authorization" : `Bearer `
-      },
-      params: {
-        'page': '1'
-      },
-      responseType: 'blob',
-    },
-    theme: "attachPin",
-    hideProgressBar: true,
-    hideResetBtn: true,
-    hideSelectBtn: true,
-    fileNameIndex: true,
-    replaceTexts: {
-      selectFileBtn: 'Select Files',
-      resetBtn: 'Reset',
-      uploadBtn: 'Upload',
-      dragNDropBox: 'Drag N Drop',
-      attachPinBtn: 'Attach Files...',
-      afterUploadMsg_success: 'Successfully Uploaded !',
-      afterUploadMsg_error: 'Upload Failed !',
-      sizeLimit: 'Size Limit'
-    }
-};
+  
   constructor(public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {}
@@ -47,4 +16,16 @@ export class UploadPrescriptionComponent implements OnInit {
   close() {
     this.activeModal.close("Save click");
   }
+
+  files: File[] = [];
+ 
+onSelect(event) {
+  console.log(event);
+  this.files.push(...event.addedFiles);
+}
+ 
+onRemove(event) {
+  console.log(event);
+  this.files.splice(this.files.indexOf(event), 1);
+}
 }

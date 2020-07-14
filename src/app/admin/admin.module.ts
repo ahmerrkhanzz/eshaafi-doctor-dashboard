@@ -14,7 +14,7 @@ import { AddDoctorComponent } from "./doctors/add-doctor/add-doctor.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { DoctorAppointmentsComponent } from "./doctors/doctor-appointments/doctor-appointments.component";
 import { UploadPrescriptionComponent } from './doctors/doctor-appointments/upload-prescription/upload-prescription.component';
-import { AngularFileUploaderModule } from "angular-file-uploader";
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import { AngularFileUploaderModule } from "angular-file-uploader";
     UiSwitchModule,
     AdminRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
-    AngularFileUploaderModule,
+    NgxDropzoneModule
     
   ],
   exports: [

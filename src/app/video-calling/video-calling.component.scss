@@ -1,81 +1,77 @@
-.container{
-    position: relative;
-    .local {
-        position: absolute;
-        right: 1rem;
-        bottom: 1rem;
-        width: 14vw;
-        height: 14vh;
-        border-radius: 5px;
-        overflow: hidden;
-        z-index: 1;
-      }
-      
-      .remote {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-      }
-    
-}
-.ngx-nav-drawer{
-    background-color: #00b8ae;
-      }
-  .btn-primary{
-      background-color: transparent;
-      border: none;
-     :first-child{
-         height: 3.5rem;
-     }
+.container {
+  position: relative;
+  .local {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 14vw;
+    height: 14vh;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
   }
 
- // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) { 
-    .container{
-    .remote{
-        height: 45rem;
-        width: 75rem;
-        left: 27rem;
-        top: 8rem;
-    }
-    .local{
-        top: 42rem;
-        right: 16rem;
-    }
+  .remote {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
 }
-    .action_buttons{
-        padding-left: 33rem;
-       z-index: 999999 !important;
-       padding-top: 47rem;
-       position: absolute;
-     }
-    
- }
+.ngx-nav-drawer {
+  background-color: #00b8ae;
+}
+.btn-primary {
+  background-color: transparent;
+  border: none;
+  :first-child {
+    height: 3.5rem;
+  }
+}
 
- 
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .container {
+    .remote {
+      height: 45rem;
+      width: 75rem;
+      left: 27rem;
+      top: 8rem;
+    }
+    .local {
+      top: 42rem;
+      right: 16rem;
+    }
+  }
+  .action_buttons {
+    padding-left: 33rem;
+    z-index: 999999 !important;
+    padding-top: 47rem;
+    position: absolute;
+  }
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .action_buttons{
-    padding-left: 6rem;;
-       z-index: 999999 !important;
-       position: absolute;
-     }
-     .btn-primary{
-         :first-child{
-             height: 2.5rem;
-         }
-     }
-     .navigation_drawer_button{
-        margin-top: -75rem;
-     }
- 
-} 
+  .action_buttons {
+    padding-left: 6rem;
+    z-index: 999999 !important;
+    position: absolute;
+  }
+  .btn-primary {
+    :first-child {
+      height: 2.5rem;
+    }
+  }
+  .navigation_drawer_button {
+    margin-top: -75rem;
+  }
+}
 
 /* If screen size is more than 600px wide, set the font-size of <div> to 80px */
 @media screen and (min-width: 600px) {
-  .navigation_drawer_button{
-      display: none;
+  .navigation_drawer_button {
+    display: none;
   }
-  }
+}

@@ -8,8 +8,8 @@ import { AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent } from '
 })
 export class VideoCallingComponent implements OnInit {
   show = false;
-  mic_on= '';
-  cam_on= '';
+  mic_on= false;
+  cam_on= false;
   title = 'angular-video';
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
