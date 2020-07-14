@@ -1,0 +1,43 @@
+@import "../../../assets/scss/_variables.scss";
+
+.card {
+  border: none;
+  box-shadow: 0 0 30px 0 rgba(82, 63, 105, 0.05);
+  border-radius: 0.42rem;
+  &-image{
+    height: 411px;
+    overflow: hidden;
+  }
+  &-body {
+    padding: 2.5rem;
+    .card-title {
+      font-weight: 600;
+      color: $text-dark;
+    }
+    .list-group {
+      &-item {
+        border-style: dashed;
+        padding-left: 0;
+        padding-right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 400;
+        font-size: 0.95rem;
+        color: $text-grey;
+      }
+    }
+    .icon-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $text-muted;
+        font-weight: 500;
+        margin-right: 1rem;
+        img{
+          width: 1rem;
+          margin-right: 0.3rem;
+        }
+      }
+  }
+}

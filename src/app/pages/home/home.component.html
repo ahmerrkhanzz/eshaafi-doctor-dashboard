@@ -1,0 +1,80 @@
+<!-- <div class="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-7 col-sm-12">
+                <app-location-search-box></app-location-search-box>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 home-call d-flex align-items-center">
+                <i class="fas fa-phone-alt mr-1"></i>
+                Call : +92 304 0555 060
+            </div>
+        </div>
+    </div>
+</div> -->
+<app-carousel></app-carousel>
+<section class="pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-lg-6" *ngFor="let promotion of promotions">
+                <app-promotions [data]="promotion"></app-promotions>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-primary">
+    <div class="parallax">
+        <div class="parallax-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center section-heading">
+                        <h2>We Have Specialist Doctors To Solve Your Problems</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <app-ui-carousel [data]="doctorsList" [config]="doctors_config" [clientCLass]="'doctors'"
+                            [showBookButton]="true"></app-ui-carousel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-grey">
+    <div class="container pt-5 pb-2">
+        <div class="row">
+            <div class="col-12 text-center section-heading">
+                <h2><strong>Blogs</strong> & News</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 mb-5" *ngFor="let blog of blogs">
+                <app-blogs [blog]="blog"></app-blogs>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center section-heading">
+                <h2><strong>Testimonials</strong></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <app-ui-carousel [data]="testimonials" [config]="testimonials_config" [clientCLass]="'testimonials'"
+                    [showBookButton]="false"></app-ui-carousel>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-grey">
+    <div class="container pt-5 pb-5">
+        <div class="row">
+            <div class="col-12">
+                <app-mobile-banner></app-mobile-banner>
+            </div>
+        </div>
+    </div>
+</section>

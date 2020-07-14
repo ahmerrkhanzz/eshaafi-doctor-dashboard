@@ -1,0 +1,31 @@
+@import "../../../../assets/scss/_variables.scss";
+.card {
+  .accordion {
+    ::ng-deep .card {
+      box-shadow: none;
+      &-header {
+        background: transparent;
+        border: none;
+        padding: 0.3rem 0;
+        button {
+          padding-left: 0;
+          text-align: left !important;
+          &:hover,
+          &:focus {
+            text-decoration: none !important;
+          }
+        }
+        .title {
+          color: $text-dark;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+      }
+      &-body{
+          padding-left: 2.5rem;
+          padding-top: 0;
+          color: $text-grey;
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+<div class="container doctor">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="row">
+        <div class="col-lg-6">
+          <app-doctor-info-card [doctor]="selectedDoctor[0]"></app-doctor-info-card>
+        </div>
+        <div class="col-lg-6">
+          <div class="doctor-info pt-5">
+            <h4>{{selectedDoctor[0].name}}</h4>
+            <h5>{{selectedDoctor[0].specialization}}</h5>
+            <h6>
+              MBBS, MS - General Surgery, MCh - Neuro Surgery, Fellowship in
+              Interventional Neurosurgery (FINR)
+            </h6>
+          </div>
+          <div class="doctor-biography">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+              ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
+              accumsan lacus vel facilisis.Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+            </p>
+          </div>
+          <div class="doctor-biography">
+            <h5>Education</h5>
+            <p>PHD degree in Neorology at University of Mediserv (2006)</p>
+            <p>Master of Neoro Surgery at University of Mediserv (2002)</p>
+            <p>
+              MBBS degree in Neurosciences at University of Mediserv (2002)
+            </p>
+            <p>Higher Secondary Certificate at Mediserv collage (1991)</p>
+          </div>
+          <div class="doctor-biography">
+            <h5>Specialization</h5>
+            <p>Internal Medicine Physician</p>
+            <p>Obstetrician/Gynecologist (OB/GYN)</p>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-lg-12">
+          <app-patient-excperience></app-patient-excperience>
+        </div>
+      </div>
+
+      <div class="row pt-3">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                Services
+              </h5>
+              <ng-container *ngFor="let service of services">
+                <app-doctor-services [service]="service"></app-doctor-services>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-3">
+        <div class="col-12">
+          <app-doctor-experience></app-doctor-experience>
+        </div>
+      </div>
+
+      <div class="row pt-3">
+        <div class="col-12">
+          <app-doctor-faq></app-doctor-faq>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="sticky">
+        <div class="doctor-biography wave wave-grey video mt-3">
+          <h5>Online Consultation (PKR 500)</h5>
+          <app-video-consult-booking></app-video-consult-booking>
+        </div>
+      </div>
+      <!-- <div class="doctor-biography mt-3">
+        <app-doctor-experience></app-doctor-experience>
+      </div> -->
+    </div>
+  </div>
+</div>

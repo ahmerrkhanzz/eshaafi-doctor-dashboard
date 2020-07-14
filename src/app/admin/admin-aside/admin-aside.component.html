@@ -1,0 +1,17 @@
+<div class="navaside">
+  <div class="navaside-header">
+    <img src="../../../assets/images/h_logo.png" alt="">
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let list of navList">
+      <a href="javascript:;" (click)="tabClick(list)">
+        <i class="{{list.icon}} mr-3"></i>
+        {{ list.name }}
+      </a>
+    </li>
+  </ul>
+ 
+</div>
+
+
+

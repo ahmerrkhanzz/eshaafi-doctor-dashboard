@@ -1,0 +1,40 @@
+<div class="card mb-2">
+    <div class="card-body">
+        <div class="d-flex bd-highlight">
+            <!--begin::Pic-->
+            <div class="card-body-thumb">
+                <img alt="doc" [src]="doctor.img">
+            </div>
+            <div class="card-body-intro bd-highlight">
+                <h5>
+                    {{doctor.name}}
+                    <img *ngIf="doctor.verified" src="../../../assets/icons/verified.svg" alt="">
+                    <span *ngIf="doctor.available">(Available today)</span>
+                </h5>
+                <p>{{doctor.qualification}}</p>
+                <p>{{doctor.specialization}}</p>
+                <div class="d-flex flex-wrap my-2">
+                    <div class="icon-info">
+                        <img src="../../../assets/icons/like.svg" alt="">
+                        105
+                    </div>
+                    <div class="icon-info">
+                        <img src="../../../assets/icons/experience.svg" alt=""> 10 Year
+                    </div>
+                    <div class="icon-info">
+                        <img src="../../../assets/icons/money.svg" alt=""> Rs. 2500
+                    </div>
+                    <div class="icon-info">
+                        <img src="../../../assets/icons/marker.svg" alt=""> Islamabad
+                    </div>
+                </div>
+            </div>
+            <div class="bd-highlight ml-auto action-buttons">
+                <button class="btn btn-light-primary btn-sm mr-2" (click)="viewProfile(doctor.id)">View Profile</button>
+                <button class="btn btn-primary btn-sm">Consult Online</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

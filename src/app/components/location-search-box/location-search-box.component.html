@@ -1,0 +1,19 @@
+<div class="search">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <a href="javascript:;" class="btn btn-link-success"><i class="fa fa-map-marker-alt"></i></a>
+        </div>
+        <input id="typeahead-basic" type="text" class="form-control" placeholder="City" [(ngModel)]="model" [ngbTypeahead]="search" />
+        <div class="input-group-append">
+            <a href="javascript:;" class="btn btn-link-success"><i class="fas fa-crosshairs"></i></a>
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <a href="javascript:;" class="btn btn-link-success"><i class="fa fa-search"></i></a>
+        </div>
+        <input type="text" class="form-control" placeholder="Search doctors, clinics, hospitals etc...">
+    </div>
+</div>
+<!-- <hr>
+<pre>Model: {{ model | json }}</pre> -->

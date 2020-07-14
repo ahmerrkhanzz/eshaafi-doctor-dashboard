@@ -1,0 +1,115 @@
+@import "../../../assets/scss/_variables.scss";
+
+.picsum-img-wrapper {
+  img {
+    width: 100%;
+  }
+}
+::ng-deep .carousel-inner,
+::ng-deep .carousel-item {
+  height: 30rem;
+  &:focus {
+    outline: none;
+  }
+}
+::ng-deep .picsum-img-wrapper,
+img,
+::ng-deep.carousel {
+  &:focus {
+    outline: none;
+  }
+}
+::ng-deep .carousel-caption {
+  top: 8rem;
+  max-width: 600px;
+  left: 0;
+  bottom: unset;
+  color: $color-primary;
+  right: 26%;
+  margin: 0 auto;
+  text-align: left;
+  h3 {
+    font-weight: 600;
+  }
+  p {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  button {
+    padding: 1rem 5rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    background: transparent;
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+@media (max-width: 1294px) {
+  ::ng-deep .carousel-inner,
+  ::ng-deep .carousel-item {
+    height: 20rem;
+  }
+  ::ng-deep .carousel-caption {
+    top: 2rem;
+    max-width: 600px;
+    h3 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.7rem 5rem;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 973px) {
+  ::ng-deep .carousel-inner,
+  ::ng-deep .carousel-item {
+    height: 20rem;
+  }
+  ::ng-deep .carousel-caption {
+    top: 2rem;
+    max-width: 440px;
+    right: 14rem;
+    h3 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.7rem 5rem;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  ::ng-deep .carousel-inner,
+  ::ng-deep .carousel-item {
+    height: auto;
+  }
+  ::ng-deep .carousel-caption {
+    top: 2rem;
+    max-width: calc(100vw - 60px);
+    text-align: center;
+    right: 0;
+    h3 {
+      font-size: 1.2rem;
+    }
+    button {
+      padding: 0.2rem 2rem;
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .carousel-caption {
+    top: 0rem;
+  }
+}

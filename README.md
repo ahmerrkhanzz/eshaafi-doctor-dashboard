@@ -1,2 +1,1 @@
-# eshaafi-doctor-dashboard
-Doctor Dashboard
+# eshaafiweb-angular
