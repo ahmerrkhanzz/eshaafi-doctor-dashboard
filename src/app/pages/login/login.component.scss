@@ -9,6 +9,7 @@
     display: flex;
     padding: 5rem;
     justify-content: center;
+    height: 100vh;
     .close{
       position: absolute;
       top: 2rem;
@@ -21,13 +22,15 @@
         justify-content: center;
         flex-direction: column;
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 6rem;
         align-items: center;
+        padding-top: 5rem;
         h3{
           font-size: 1.5rem;
           color: $text-purple;
           font-weight: 500;
           margin-bottom: 0.8rem;
+          margin-top: 3rem;
         }
         p{
           color: $text-muted;

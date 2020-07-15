@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -8,13 +8,14 @@ import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public activeModal: NgbActiveModal) { }
+
+  constructor(private _router:Router) { }
 
   ngOnInit(): void {
   }
 
-  close() {
-    this.activeModal.close('Save click')
+  loginHandler() {
+    this._router.navigate([`/admin/online-consultation`]);
   }
 
 }

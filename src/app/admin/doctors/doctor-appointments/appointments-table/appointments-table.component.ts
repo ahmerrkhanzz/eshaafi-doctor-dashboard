@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UploadPrescriptionComponent } from "../upload-prescription/upload-prescription.component";
-
+import { Router } from "@angular/router";
 @Component({
   selector: "app-appointments-table",
   templateUrl: "./appointments-table.component.html",
@@ -114,7 +114,7 @@ export class PatientsTableComponent implements OnInit {
     },
   ];
 
-  constructor(private _modalService: NgbModal) {}
+  constructor(private _modalService: NgbModal, private _router:Router) {}
 
   ngOnInit() {
     this.status = [
@@ -151,4 +151,9 @@ export class PatientsTableComponent implements OnInit {
     });
     modalRef.componentInstance.name = "World";
   }
+
+  videoCall() {
+    this._router.navigate([`/admin/video-call`]);
+  }
+
 }
