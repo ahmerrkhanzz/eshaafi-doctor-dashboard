@@ -15,6 +15,7 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { DoctorAppointmentsComponent } from "./doctors/doctor-appointments/doctor-appointments.component";
 import { UploadPrescriptionComponent } from './doctors/doctor-appointments/upload-prescription/upload-prescription.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { AppointmentService } from './doctors/doctor-appointments/services/appointment.service';
 
 
 @NgModule({
@@ -47,5 +48,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     PatientsTableComponent,
     AddDoctorComponent,
   ],
+  providers: [AppointmentService],
 })
 export class AdminModule {}

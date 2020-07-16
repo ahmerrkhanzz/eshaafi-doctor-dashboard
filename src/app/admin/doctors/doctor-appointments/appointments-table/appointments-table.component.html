@@ -25,8 +25,7 @@
                 <input type="checkbox" name="Checkboxes4" />
                 <span></span></label>
             </th>
-            <th>
-              Name</th>
+            <th>Name</th>
             <th>Phone</th>
             <th>Gender</th>
             <th>Data & Time</th>
@@ -48,26 +47,26 @@
               <div class="table-span">
                 <div class="d-flex align-items-center">
                   <div class="table-span-thumb">
-                    <img [src]="patient.img" alt="photo" />
+                    <img [src]="patient.patient_image" alt="photo" />
                   </div>
                   <div class="text-truncate">
                     <div class="text-dark-75 font-weight-bolder font-size-lg mb-0">
-                      {{ patient.name }}
+                      {{ patient.patient_name }}
                     </div>
                     <a href="javascript;"
-                      class="text-muted text-hover-primary font-weight-bold-500">{{ patient.email }}</a>
+                      class="text-muted text-hover-primary font-weight-bold-500">{{ patient.patient_email }}</a>
                   </div>
                 </div>
               </div>
             </td>
-            <td>{{ patient.phone }}</td>
-            <td>{{ patient.gender }}</td>
+            <td>{{ patient.patient_phone_number }}</td>
+            <td>{{ patient.patient_gender }}</td>
             <td>
               <div class="text-truncate">
                 <div class="text-dark-75  font-size-lg mb-0">
-                  {{ patient.time }}
+                  {{ patient.appointment_time }}
                 </div>
-                <p class="text-muted text-hover-primary font-weight-bold-500">{{ patient.date }}</p>
+                <p class="text-muted text-hover-primary font-weight-bold-500">{{ patient.appointment_date }}</p>
               </div>
             </td>
             <td>
@@ -75,7 +74,7 @@
                 <div class="text-dark-75  font-size-lg mb-0">
                   {{ patient.fee }}
                 </div>
-                <p class="text-muted text-hover-primary font-weight-bold-500">{{ patient.feeStatus }}</p>
+                <p class="text-muted text-hover-primary font-weight-bold-500">{{ patient.fee_status }}</p>
               </div>
             </td>
 
@@ -86,6 +85,7 @@
                     <button class="btn btn-outline-primary" id="appointmentStatusDropdown"
                       ngbDropdownToggle>Pending</button>
                     <div ngbDropdownMenu aria-labelledby="appointmentStatusDropdown">
+                      <button ngbDropdownItem>pending</button>
                       <button ngbDropdownItem>Cancelled</button>
                       <button ngbDropdownItem>Not Appreared</button>
                       <button ngbDropdownItem>Completed</button>
@@ -98,7 +98,7 @@
 
             <td>
               <ul class="list-group list-group-horizontal d-flex">
-                <li *ngFor="let record of patient.records" class="list-group-item d-flex"><img
+                <li *ngFor="let record of patient.files" class="list-group-item d-flex"><img
                     class="patient_record_img" [src]="record" alt=""></li>
               </ul>
 
@@ -143,7 +143,7 @@
     </div>
     <!--end: Datatable-->
     <div class="card-body-paging">
-      <ngb-pagination [collectionSize]="70" [page]="1" [boundaryLinks]="true"></ngb-pagination>
+      <ngb-pagination [collectionSize]="this.total" [page]="this.currentPage" [boundaryLinks]="true"></ngb-pagination>
     </div>
   </div>
   <!--end::Body-->

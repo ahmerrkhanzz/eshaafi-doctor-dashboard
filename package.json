@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~9.1.11",
+    "@angular/animations": "^10.0.3",
     "@angular/cdk": "^10.0.1",
     "@angular/common": "~9.1.11",
     "@angular/compiler": "~9.1.11",
@@ -36,6 +36,7 @@
     "ngx-image-uploader": "^6.0.0-beta.1",
     "ngx-input-file": "^8.0.1",
     "ngx-nav-drawer": "0.0.3",
+    "ngx-toastr": "^13.0.0",
     "ngx-toggle-switch": "^2.0.5",
     "ngx-upload-image": "0.0.4",
     "rxjs": "~6.5.4",

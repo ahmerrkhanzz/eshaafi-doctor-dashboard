@@ -13,8 +13,10 @@ import { environment } from 'src/environments/environment';
 import { NgxAgoraModule } from 'ngx-agora';
 import { VideoCallingComponent } from './video-calling/video-calling.component';
 import { NgxNavDrawerModule } from 'ngx-nav-drawer';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { HelperService } from './services/helper.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthenticatedApiService } from './services/authenticated-api.service';
 
 @NgModule({
   declarations: [
@@ -31,10 +33,11 @@ import { NgxNavDrawerModule } from 'ngx-nav-drawer';
     SharedModule,
     AdminModule,
     NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
-    NgxNavDrawerModule
-   
+    NgxNavDrawerModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [HelperService, AuthenticatedApiService],
   bootstrap: [AppComponent],
   exports: [NotFoundComponent,VideoCallingComponent],
 })

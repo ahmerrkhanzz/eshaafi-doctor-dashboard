@@ -1,14 +1,4 @@
-<!-- <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-  <button
-    type="button"
-    class="close"
-    aria-label="Close"
-    (click)="close()"
-  >
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div> -->
+
 <div class="card login">
   <div class="card-body">
  
@@ -18,14 +8,15 @@
         <h3>Login as Doctor</h3>
        
       </div>
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
         <div class="form-group mb-4">
           <input
-            type="email"
+            type="text"
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            placeholder="Email"
+            placeholder="Username"
+            formControlName="user_name"
           />
         </div>
         <div class="form-group">
@@ -34,6 +25,7 @@
             class="form-control"
             id="exampleInputPassword1"
             placeholder="Password"
+            formControlName="password"
           />
         </div>
         <div class="form-group d-flex justify-content-between">
@@ -43,7 +35,7 @@
           >
           <a href="javascript:;" class="text-muted">Forget Password ?</a>
         </div>
-        <button type="button" class="btn btn-light-primary mt-4" (click)="loginHandler()">
+        <button type="submit" class="btn btn-light-primary mt-4">
           Sign In
         </button>
       </form>
