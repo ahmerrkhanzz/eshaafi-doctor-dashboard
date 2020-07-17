@@ -17,7 +17,7 @@ export class AuthenticatedApiService {
   authToken = this.authUser.token;
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + this.authToken
+    Authorization: 'Bearer ' + this.authToken,
   });
   constructor(
     private http: HttpClient,
@@ -35,15 +35,6 @@ export class AuthenticatedApiService {
     return this.http.get(`${this.baseUri}/${endPoint}`,
       { headers: this.headers, params: httpParams }).pipe(catchError((errorData: any) => this.handleError(errorData)),
         tap((responseData: any) => {
-          if (responseData.status === 0) {
-            let errorMessage = 'Internal Server error';
-            if (responseData.error) {
-              errorMessage = responseData.message;
-            } else if (responseData.message) {
-              errorMessage = responseData.message;
-            }
-            this.helperService.showToast(errorMessage,'error');
-          }
         }));
   }
 
@@ -51,15 +42,6 @@ export class AuthenticatedApiService {
     return this.http.post(`${this.baseUri}/${endPoint}`, data,
       { headers: this.headers }).pipe(catchError((errorData: any) => this.handleError(errorData)),
         tap((responseData: any) => {
-          if (responseData.status === 0 && endPoint !== 'ServiceStaff/restapi/api/location') {
-            let errorMessage = 'Internal Server error';
-            if (responseData.error) {
-              errorMessage = responseData.error;
-            } else if (responseData.message) {
-              errorMessage = responseData.message;
-            }
-            this.helperService.showToast(errorMessage);
-          }
         }));
   }
 
@@ -67,9 +49,16 @@ export class AuthenticatedApiService {
     let errorMessage = errorResponse[`error`].error ? errorResponse[`error`].error : errorResponse.message;
     if (errorResponse.status === 401) {
       errorMessage = 'Authentication Failed!';
-      // this.authService.logout();
+      this.authService.logout();
     }
     this.helperService.showToast(errorMessage, 'error', 3000);
     return throwError(errorResponse);
+  }
+
+  nextUrlData(endPoint, data) {
+    return this.http.post(`${endPoint}`, data,
+      { headers: this.headers }).pipe(catchError((errorData: any) => this.handleError(errorData)),
+        tap((responseData: any) => {
+        }));
   }
 }

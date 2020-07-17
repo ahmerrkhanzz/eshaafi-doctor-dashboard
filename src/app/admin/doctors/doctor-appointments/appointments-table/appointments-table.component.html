@@ -7,7 +7,7 @@
       <!-- <input type="input" class="form-control form-control-sm mr-2" placeholder="Search..." /> -->
 
       <ng-multiselect-dropdown ngbtooltip="Select Filters" [settings]="dropdownSettings" [data]="status"
-        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+        (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)">
       </ng-multiselect-dropdown>
 
     </div>
@@ -81,16 +81,19 @@
             <td>
               <div class="row">
                 <div class="col">
-                  <div ngbDropdown class="d-inline-block">
-                    <button class="btn btn-outline-primary" id="appointmentStatusDropdown"
+                  <div  ngbDropdown class="d-inline-block">
+                    <!-- <button class="btn btn-outline-primary" id="appointmentStatusDropdown"
                       ngbDropdownToggle>Pending</button>
                     <div ngbDropdownMenu aria-labelledby="appointmentStatusDropdown">
-                      <button ngbDropdownItem>pending</button>
-                      <button ngbDropdownItem>Cancelled</button>
-                      <button ngbDropdownItem>Not Appreared</button>
-                      <button ngbDropdownItem>Completed</button>
+                      <button *ngFor="let status of this.status" ngbDropdownItem >{{status.item_text}}</button>
 
-                    </div>
+                    </div> -->
+
+                    <select id='peeps' ngbDropdown name='people' (change)="changeStatus(patient.appointment_id, $event)" [(ngModel)]="patient.appointment_status">
+                      <option *ngFor="let status of this.status" [value]="status.item_id" >
+                        {{status.item_text}}
+                      </option>    
+                  </select>
                   </div>
                 </div>
               </div>
@@ -99,7 +102,7 @@
             <td>
               <ul class="list-group list-group-horizontal d-flex">
                 <li *ngFor="let record of patient.files" class="list-group-item d-flex"><img
-                    class="patient_record_img" [src]="record" alt=""></li>
+                    class="patient_record_img" [src]="record.file" alt=""></li>
               </ul>
 
             </td>
@@ -118,7 +121,7 @@
                   </svg>
 
                 </a>
-                <a (click)="addPrescription()" href="javascript:;"
+                <a (click)="addPrescription(patient.appointment_id)" href="javascript:;"
                   class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2"
                   ngbTooltip="Add Prescription">
                   <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22">
@@ -143,7 +146,11 @@
     </div>
     <!--end: Datatable-->
     <div class="card-body-paging">
-      <ngb-pagination [collectionSize]="this.total" [page]="this.currentPage" [boundaryLinks]="true"></ngb-pagination>
+      <ngb-pagination 
+      (pageChange)="getPageFromService()" 
+      [collectionSize]="this.total" 
+      [(page)]="page" 
+      [boundaryLinks]="true"></ngb-pagination>
     </div>
   </div>
   <!--end::Body-->

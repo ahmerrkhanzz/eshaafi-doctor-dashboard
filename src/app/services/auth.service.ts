@@ -53,7 +53,6 @@ export class AuthService {
   }
 
   login(formData: any) {
-
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -65,8 +64,6 @@ export class AuthService {
       device_type: 'web',
       password: formData.password
     };
-
     return this.httpClient.post(`${this.hostUri + endpoint}`, postedData, { headers });
-
   }
 }

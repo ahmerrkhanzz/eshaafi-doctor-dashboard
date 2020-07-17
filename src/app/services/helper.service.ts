@@ -11,7 +11,7 @@ export class HelperService {
   ) { }
 
   showToast(message: string = 'Success', status: string = 'success', duration = 2000) {
-    if(status == 'sucecss') {
+    if(status == 'success') {
       this.toast.success(message);
     } else {
       this.toast.error(message);

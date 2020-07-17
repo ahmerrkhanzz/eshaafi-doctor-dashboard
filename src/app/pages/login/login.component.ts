@@ -39,8 +39,6 @@ export class LoginComponent implements OnInit {
   submitForm() {
    this.helperService.validateAllFormFields(this.loginForm);
     if (this.loginForm.invalid) {
-      console.log(this.loginForm);
-      this.toast.error('All feilds are required');
       this.helperService.showToast('All fields are required!', 'error');
       return;
     }
