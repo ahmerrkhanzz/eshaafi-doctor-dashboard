@@ -124,7 +124,8 @@ export class PatientsTableComponent implements OnInit {
     
   }
 
-  videoCall() {
+  videoCall(id: any) {
+    localStorage.setItem('appointment_id', id);
     this._router.navigate([`/admin/video-call`]);
   }
 
