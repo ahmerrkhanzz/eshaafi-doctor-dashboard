@@ -14,6 +14,7 @@ import { HelperService } from 'src/app/services/helper.service';
 export class UploadPrescriptionComponent implements OnInit {
   @Input() public appointment_id: any;
   public authUser: any;
+  reports: any = [];
   
   constructor(
     public activeModal: NgbActiveModal,
@@ -27,8 +28,8 @@ export class UploadPrescriptionComponent implements OnInit {
     this.authUser = this.authService.getAuthUser();
   }
 
-  close() {
-    this.activeModal.close("Save click");
+  close(uploadFiles: any[] = []) {
+    this.activeModal.close(uploadFiles);
   }
 
   files: File[] = [];
@@ -36,6 +37,11 @@ export class UploadPrescriptionComponent implements OnInit {
   onSelect(event) {
     console.log(event);
     this.files.push(...event.addedFiles);
+    this.readFile(this.files[0]).then(fileContents => {
+      // Put this string in a request body to upload it to an API.
+      this.reports.push(fileContents);
+      console.log(this.reports);
+    });
   }
   
   onRemove(event) {
@@ -45,15 +51,38 @@ export class UploadPrescriptionComponent implements OnInit {
 
   submit() {
     const user_id = this.authUser.id;
-    this.appointmentService.uploadFiles(user_id, this.appointment_id, this.files)
+    this.appointmentService.uploadFiles(user_id, this.appointment_id, this.reports)
     .pipe(takeUntil(this.unsubscribe)).subscribe(
       (successResponse: any) => {
         this.helperService.showToast(successResponse.message, 'success');
-        this.close();
+        this.close(successResponse.data);
       },
       (errorResponse: any) => {
         console.log(errorResponse);
       }
     );
+  }
+
+
+  private async readFile(file: File): Promise<string | ArrayBuffer> {
+    return new Promise<string | ArrayBuffer>((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        return resolve((e.target as FileReader).result);
+      };
+
+      reader.onerror = e => {
+        console.error(`FileReader failed on file ${file.name}.`);
+        return reject(null);
+      };
+
+      if (!file) {
+        console.error('No file to read.');
+        return reject(null);
+      }
+
+      reader.readAsDataURL(file);
+    });
   }
 }

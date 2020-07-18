@@ -18,9 +18,9 @@ export class AppointmentService {
     return this.apiService.post('doctor/' + user_id +'/appointment/' + id + '/status', {status: appointment_status});
   }
 
-  uploadFiles(user_id: any,id: any, files: any) {
-    console.log(files);
-    return this.apiService.post('doctor/' + user_id +'/appointment/' + id + '/upload/prescription', {prescriptions: files});
+  uploadFiles(user_id: any,id: any, payLoad: any) {
+    console.log(payLoad);
+    return this.apiService.post('doctor/' + user_id +'/appointment/' + id + '/upload/prescription', {prescriptions: payLoad, device_type: "web"});
   }
 
   getAppointmentsList(id: any, page: any) {

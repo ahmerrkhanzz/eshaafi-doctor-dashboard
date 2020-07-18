@@ -93,6 +93,17 @@ export class PatientsTableComponent implements OnInit {
     const modalRef = this._modalService.open(UploadPrescriptionComponent, {
       size: "lg",
     });
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log(result);
+        console.log(this.appointments);
+        const ar = this.appointments.filter(e => e.appointment_id === id);
+        console.log(ar[0].files.concat(result));
+        let filess = ar[0].files.concat(result);
+        let index = this.appointments.findIndex(x => x.appointment_id === id);
+        this.appointments[index].files = filess;
+      }
+    });
     modalRef.componentInstance.appointment_id = id;
   }
 
