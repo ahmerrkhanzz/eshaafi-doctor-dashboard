@@ -16,6 +16,10 @@ import { DoctorAppointmentsComponent } from "./doctors/doctor-appointments/docto
 import { UploadPrescriptionComponent } from './doctors/doctor-appointments/upload-prescription/upload-prescription.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AppointmentService } from './doctors/doctor-appointments/services/appointment.service';
+import { HelperService } from '../services/helper.service';
+import { VideoCallingService } from '../video-calling/video-calling.service';
+import { AuthenticatedApiService } from '../services/authenticated-api.service';
+import { AuthService } from '../services/auth.service';
 
 
 @NgModule({
@@ -48,6 +52,6 @@ import { AppointmentService } from './doctors/doctor-appointments/services/appoi
     PatientsTableComponent,
     AddDoctorComponent,
   ],
-  providers: [AppointmentService],
+  providers: [AppointmentService, HelperService, VideoCallingService, AuthenticatedApiService, AuthService],
 })
 export class AdminModule {}
