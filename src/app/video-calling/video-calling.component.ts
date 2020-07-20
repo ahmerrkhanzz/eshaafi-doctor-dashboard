@@ -58,8 +58,8 @@ export class VideoCallingComponent implements OnInit {
           this.channelName = successResponse.data.channel_name;
           this.isExpired = successResponse.data.is_expired;
           this.canCall = successResponse.data.can_call;
-
-          if(this.isExpired === false && this.canCall === true ) {
+          this.callStatus  = successResponse.data.status;
+          if(this.isExpired === false && this.canCall === true && ((this.callStatus === 'default') || (this.callStatus === 'disabled'))) {
             console.log(this.isExpired + 'can Call' + this.canCall);
             this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
             this.assignClientHandlers();
@@ -135,7 +135,10 @@ export class VideoCallingComponent implements OnInit {
 
     this.client.on(ClientEvent.RemoteStreamSubscribed, evt => {
       const stream = evt.stream as Stream;
+      // change status through API.
+      this.callSync('enabled');
       const id = this.getRemoteId(stream);
+      
       if (!this.remoteCalls.length) {
         this.remoteCalls.push(id);
         setTimeout(() => stream.play(id), 1000);
