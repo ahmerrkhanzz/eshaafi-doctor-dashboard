@@ -13,4 +13,8 @@ export class VideoCallingService {
     makeCall(id: any, appointment_id: any) {
       return this.apiService.post('doctor/' + id +'/appointment/' + appointment_id + '/call', {device_type: 'web'});
     }
+
+    callSync(status: any, channelName: any) {
+      return this.apiService.post('call/sync/' + channelName, {status: status, device_type: 'web'});
+    }
 }

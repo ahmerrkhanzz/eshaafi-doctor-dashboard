@@ -23,6 +23,7 @@ export class VideoCallingComponent implements OnInit {
   channelName: any;
   isExpired: any;
   canCall: any;
+  callStatus :any;
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -72,6 +73,22 @@ export class VideoCallingComponent implements OnInit {
             this._router.navigate([`/admin/online-consultation`]);
           }
 
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+
+  callSync(status: any) {
+    this.videoCallingService.callSync(status, this.channelName)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(
+        (successResponse: any) => {
+          console.log(successResponse);
+          this.callStatus = successResponse.data.status;
+          if(this.callStatus === 'disabled') {
+            this.helperService.showToast('Peer left from the channel', 'error');
+          }
         },
         (errorResponse: any) => {
           console.log(errorResponse);
@@ -139,6 +156,8 @@ export class VideoCallingComponent implements OnInit {
       if (stream) {
         stream.stop();
         this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
+        // HERE CALL ENDED.
+        this.callSync('disabled');
         console.log(`${evt.uid} left from this channel`);
       }
     });
