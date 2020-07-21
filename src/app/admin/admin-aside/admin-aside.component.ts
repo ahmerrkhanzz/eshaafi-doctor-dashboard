@@ -22,7 +22,7 @@ export class AdminAsideComponent implements OnInit {
   {
     name: "Logout",
     icon: "fas fa-sign-out-alt",
-    routeName: "/"
+    routeName: 'logout'
   }
   ];
   constructor(private _router: Router) {}
@@ -30,7 +30,12 @@ export class AdminAsideComponent implements OnInit {
   ngOnInit(): void {}
 
   tabClick(comp) {
-   
-   this._router.navigate([`admin/${comp.routeName.toLowerCase()}`]);
+    if(comp.routeName === 'logout') 
+    {
+      localStorage.clear();
+      this._router.navigate([`/`]);
+    } else {
+      this._router.navigate([`admin/${comp.routeName.toLowerCase()}`]);
+    }
   }
 }
