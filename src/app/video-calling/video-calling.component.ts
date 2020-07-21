@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent } from 'ngx-agora';
+import { VideoCallingService } from './video-calling.service';
+import { takeUntil } from 'rxjs/operators';
+import { HelperService } from '../services/helper.service';
+import { AuthService } from '../services/auth.service';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,42 +13,108 @@ import { Router } from '@angular/router';
   styleUrls: ['./video-calling.component.scss']
 })
 export class VideoCallingComponent implements OnInit {
-  isVisible = true;
+  show = false;
   mic_on= false;
   cam_on= false;
   title = 'angular-video';
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
-  patients:any[]=[
-    {
-name: "Mr. Ali"
-    }
-  ]
+  channelKey: any;
+  channelName: any;
+  isExpired: any;
+  canCall: any;
 
   private client: AgoraClient;
   private localStream: Stream;
   private uid: number;
 
-  constructor(private ngxAgoraService: NgxAgoraService, private _router:Router ) {
+  constructor(
+    private ngxAgoraService: NgxAgoraService,
+    private videoCallingService: VideoCallingService,
+    private helperService: HelperService,
+    private authService: AuthService,
+    private _router: Router,
+    ) {
     this.uid = Math.floor(Math.random() * 100);
   }
+  private unsubscribe: Subject<any> = new Subject();
 
   ngOnInit() {
+    const id = localStorage.getItem('appointment_id');
+    const user = this.authService.getAuthUser();
+    let user_id = user.id;
+    this.uid = user_id;
+    this.loadCallCredentials(user.id, id);
     
-    this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
-    this.assignClientHandlers();
+  }
 
-    this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
-    this.assignLocalStreamHandlers();
-    // Join and publish methods added in this step
-    this.initLocalStream(() => this.join(uid => this.publish(), error => console.error(error)));
+  loadCallCredentials(id: any, appointment_id: any) {
+    this.videoCallingService.makeCall(id, appointment_id)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(
+        (successResponse: any) => {
+          console.log(successResponse);
+          this.channelKey = successResponse.data.agora_token;
+          this.channelName = successResponse.data.channel_name;
+          this.isExpired = successResponse.data.is_expired;
+          this.canCall = successResponse.data.can_call;
+
+          if(this.isExpired === false && this.canCall === true ) {
+            console.log(this.isExpired + 'can Call' + this.canCall);
+            this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
+            this.assignClientHandlers();
+        
+            this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
+            this.assignLocalStreamHandlers();
+            // Join and publish methods added in this step
+            this.initLocalStream(() => this.join(user_id => this.publish(), error => console.error(error)));
+          } else {
+            this.helperService.showToast("Time Expired", 'error');
+            this._router.navigate([`/admin/online-consultation`]);
+          }
+
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+
+  callSync(status: any) {
+    this.videoCallingService.callSync(status, this.channelName)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(
+        (successResponse: any) => {
+          console.log(successResponse);
+          this.channelKey = successResponse.data.agora_token;
+          this.channelName = successResponse.data.channel_name;
+          this.isExpired = successResponse.data.is_expired;
+          this.canCall = successResponse.data.can_call;
+
+          if(this.isExpired === false && this.canCall === true ) {
+            console.log(this.isExpired + 'can Call' + this.canCall);
+            this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
+            this.assignClientHandlers();
+        
+            this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
+            this.assignLocalStreamHandlers();
+            // Join and publish methods added in this step
+            this.initLocalStream(() => this.join(user_id => this.publish(), error => console.error(error)));
+          } else {
+            this.helperService.showToast("Time Expired", 'error');
+            this._router.navigate([`/admin/online-consultation`]);
+          }
+
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
   }
 
   /**
    * Attempts to connect to an online chat room where users can host and receive A/V streams.
    */
   join(onSuccess?: (uid: number | string) => void, onFailure?: (error: Error) => void): void {
-    this.client.join(null, 'foo-bar', this.uid, onSuccess, onFailure);
+    this.client.join(this.channelKey, this.channelName, this.uid, onSuccess, onFailure);
   }
 
   /**
@@ -70,11 +141,9 @@ name: "Mr. Ali"
     });
 
     this.client.on(ClientEvent.RemoteStreamAdded, evt => {
-      this.isVisible = false;
       const stream = evt.stream as Stream;
       this.client.subscribe(stream, { audio: true, video: true }, err => {
         console.log('Subscribe stream failed', err);
-        
       });
     });
 
@@ -97,11 +166,12 @@ name: "Mr. Ali"
     });
 
     this.client.on(ClientEvent.PeerLeave, evt => {
-      this.isVisible = true;
       const stream = evt.stream as Stream;
       if (stream) {
-        stream.stop(); 
+        stream.stop();
         this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
+        // HERE CALL ENDED.
+
         console.log(`${evt.uid} left from this channel`);
       }
     });
@@ -133,9 +203,6 @@ name: "Mr. Ali"
 
   private getRemoteId(stream: Stream): string {
     return `agora_remote-${stream.getId()}`;
-  }
-  disconnectCall(){
-    this._router.navigate([`/admin/online-consultation`]);
   }
 }
 
