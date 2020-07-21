@@ -22,7 +22,7 @@ export class VideoCallingComponent implements OnInit {
   remoteCalls: string[] = [];
   patients:any[]=[
     {
-name: "Mr. Ali"
+name: "Patient"
     }
   ]
   channelKey: any;
