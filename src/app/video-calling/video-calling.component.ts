@@ -13,12 +13,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./video-calling.component.scss']
 })
 export class VideoCallingComponent implements OnInit {
+  isVisible = true;
   show = false;
   mic_on= false;
   cam_on= false;
   title = 'angular-video';
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
+  patients:any[]=[
+    {
+name: "Mr. Ali"
+    }
+  ]
   channelKey: any;
   channelName: any;
   isExpired: any;
@@ -141,6 +147,7 @@ export class VideoCallingComponent implements OnInit {
     });
 
     this.client.on(ClientEvent.RemoteStreamAdded, evt => {
+      this.isVisible = false;
       const stream = evt.stream as Stream;
       this.client.subscribe(stream, { audio: true, video: true }, err => {
         console.log('Subscribe stream failed', err);
@@ -166,6 +173,7 @@ export class VideoCallingComponent implements OnInit {
     });
 
     this.client.on(ClientEvent.PeerLeave, evt => {
+      this.isVisible = true;
       const stream = evt.stream as Stream;
       if (stream) {
         stream.stop();
@@ -203,6 +211,10 @@ export class VideoCallingComponent implements OnInit {
 
   private getRemoteId(stream: Stream): string {
     return `agora_remote-${stream.getId()}`;
+  }
+  callEnd() {
+    window.location.href="https://eshaafi.com/";
+    // this._router.navigate(['/']);
   }
 }
 
