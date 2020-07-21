@@ -53,11 +53,12 @@
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
       img{
-        height: 12rem;
+        height: 10rem;
       }
       h1{
-        color: $color-primary;
+        color: $color-white;
         padding-top: 1rem;
+        font-size: x-large;
       }
     }
   }
@@ -112,6 +113,14 @@
     padding-left: 0px !important;
     .calling_screen{
       height: 100vh;
+      .text-center{
+        img{
+          height: 5rem;
+        }
+        h1{
+          font-size: medium;
+        }
+      }
     }
 
     .local{
