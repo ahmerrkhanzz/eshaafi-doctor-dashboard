@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginHandler() {
-    this._router.navigate([`/admin/online-consultation`]);
+    this._router.navigate([`/consultation`]);
   }
 
 }

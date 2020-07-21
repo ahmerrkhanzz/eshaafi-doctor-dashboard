@@ -19,11 +19,11 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: "online-consultation",
+        path: "consultation",
         component: DoctorsComponent,
       },
       {
-        path:"video-call",
+        path:"videoCall",
         component: VideoCallingComponent
       }
     ],

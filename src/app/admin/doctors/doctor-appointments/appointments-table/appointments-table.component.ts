@@ -126,7 +126,7 @@ export class PatientsTableComponent implements OnInit {
 
   videoCall(id: any) {
     localStorage.setItem('appointment_id', id);
-    this._router.navigate([`/admin/video-call`]);
+    this._router.navigate([`/videoCall`]);
   }
 
   changeStatus(id: any, appointment_status: any) {

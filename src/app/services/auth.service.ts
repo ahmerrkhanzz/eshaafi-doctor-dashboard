@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class AuthService {
-  hostUri = 'http://192.168.100.73:8000/api';
+  hostUri = 'https://api.eshaafi.com/dev/api';
   constructor(
     private router: Router,
     private httpClient: HttpClient,

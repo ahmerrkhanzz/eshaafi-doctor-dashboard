@@ -17,7 +17,7 @@ export class AdminAsideComponent implements OnInit {
     {
       name: "Online Consultations",
       icon: "fa fa-user",
-      routeName: "online-consultation"
+      routeName: "consultation"
     },
   {
     name: "Logout",
@@ -35,7 +35,7 @@ export class AdminAsideComponent implements OnInit {
       localStorage.clear();
       this._router.navigate([`/`]);
     } else {
-      this._router.navigate([`admin/${comp.routeName.toLowerCase()}`]);
+      this._router.navigate([`/${comp.routeName.toLowerCase()}`]);
     }
   }
 }

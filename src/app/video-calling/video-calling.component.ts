@@ -75,7 +75,7 @@ name: "Patient"
             this.initLocalStream(() => this.join(user_id => this.publish(), error => console.error(error)));
           } else {
             this.helperService.showToast("Time Expired", 'error');
-            this._router.navigate([`/admin/online-consultation`]);
+            this._router.navigate([`/consultation`]);
           }
 
         },
