@@ -61,9 +61,9 @@ export class LoginComponent implements OnInit {
         }
         
         if (!error.error.error) {
-          this.helperService.showToast(error.error.message);
+          this.helperService.showToast(error.error.message, 'error');
         } else {
-          this.helperService.showToast(error.error.message);
+          this.helperService.showToast(error.error.message, 'error');
         }
       }
     );

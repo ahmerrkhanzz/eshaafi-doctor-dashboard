@@ -36,7 +36,7 @@ export class VideoCallingComponent implements OnInit {
     private authService: AuthService,
     private _router: Router,
     ) {
-    this.uid = Math.floor(Math.random() * 100);
+    // this.uid = Math.floor(Math.random() * 100);
   }
   private unsubscribe: Subject<any> = new Subject();
 
@@ -70,12 +70,13 @@ export class VideoCallingComponent implements OnInit {
             this.initLocalStream(() => this.join(user_id => this.publish(), error => console.error(error)));
           } else {
             this.helperService.showToast("Time Expired", 'error');
-            this._router.navigate([`/admin/online-consultation`]);
+            // this._router.navigate([`/video-calling/link-expired`]);
           }
 
         },
         (errorResponse: any) => {
           console.log(errorResponse);
+          
         }
       );
   }
@@ -100,7 +101,7 @@ export class VideoCallingComponent implements OnInit {
    * Attempts to connect to an online chat room where users can host and receive A/V streams.
    */
   join(onSuccess?: (uid: number | string) => void, onFailure?: (error: Error) => void): void {
-    this.client.join(this.channelKey, this.channelName, this.uid, onSuccess, onFailure);
+    this.client.join(null, this.channelName, this.uid, onSuccess, onFailure);
   }
 
   /**
@@ -175,6 +176,10 @@ export class VideoCallingComponent implements OnInit {
     this.localStream.on(StreamEvent.MediaAccessDenied, () => {
       console.log('accessDenied');
     });
+  }
+
+  callEnd() {
+    this._router.navigate(['/']);
   }
 
   private initLocalStream(onSuccess?: () => any): void {

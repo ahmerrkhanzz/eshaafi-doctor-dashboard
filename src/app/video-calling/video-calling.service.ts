@@ -15,6 +15,6 @@ export class VideoCallingService {
     }
 
     callSync(status: any, channelName: any) {
-      return this.apiService.post('call/sync/' + channelName, {status: status, device_type: 'web'});
+      return this.apiService.post('patient/call/sync/' + channelName, {status: status, device_type: 'web'});
     }
 }
