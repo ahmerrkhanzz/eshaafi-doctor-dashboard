@@ -5,7 +5,13 @@
   
       <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
   
-      <div *ngIf="isVisible" [style.display]="isVisible ? 'block' : 'none'" class="calling_screen" ></div>
+      <div *ngIf="isVisible" [style.display]="isVisible ? 'block' : 'none'" class="calling_screen" >
+        <div class="text-center" *ngFor="let patient of patients">
+          <img src="../../assets/icons/ic_patient_call.svg" alt="" class="img-responsive">
+          <h1>{{patient.name}}</h1>
+        </div>
+      </div>
+  
   
       <div class="action_buttons">
         <button class="btn btn-primary" (click)="mic_on = !mic_on">

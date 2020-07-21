@@ -14,6 +14,11 @@ export class VideoCallingComponent implements OnInit {
   title = 'angular-video';
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
+  patients:any[]=[
+    {
+name: "Mr. Ali"
+    }
+  ]
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -95,7 +100,7 @@ export class VideoCallingComponent implements OnInit {
       this.isVisible = true;
       const stream = evt.stream as Stream;
       if (stream) {
-        stream.stop();
+        stream.stop(); 
         this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
         console.log(`${evt.uid} left from this channel`);
       }
