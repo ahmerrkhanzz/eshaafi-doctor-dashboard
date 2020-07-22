@@ -120,7 +120,7 @@ name: "Patient"
    * Attempts to connect to an online chat room where users can host and receive A/V streams.
    */
   join(onSuccess?: (uid: number | string) => void, onFailure?: (error: Error) => void): void {
-    this.client.join(this.channelKey, this.channelName, this.uid, onSuccess, onFailure);
+    this.client.join(null, this.channelName, 0, onSuccess, onFailure);
   }
 
   /**
@@ -177,6 +177,7 @@ name: "Patient"
       const stream = evt.stream as Stream;
       if (stream) {
         stream.stop();
+        this.callEnd();
         this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
         // HERE CALL ENDED.
 
@@ -213,8 +214,20 @@ name: "Patient"
     return `agora_remote-${stream.getId()}`;
   }
   callEnd() {
-    window.location.href="https://eshaafi.com/";
-    // this._router.navigate(['/']);
+    // window.location.href="https://eshaafi.com/";
+    this.client.leave(function() {
+      console.log("client leaves channel");
+        //……
+    }, function(err) {
+        console.log("client leave failed ", err);
+        //error handling
+    });
+    this.client.disableDualStream(function() {
+      console.log("Disable dual stream success!");
+    }, function(err) {
+      console.log(err)
+    });
+    this._router.navigate(['/']);
   }
 }
 
