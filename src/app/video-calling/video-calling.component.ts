@@ -49,7 +49,8 @@ name: "Patient"
     const id = localStorage.getItem('appointment_id');
     const user = this.authService.getAuthUser();
     let user_id = user.id;
-    this.uid = user_id;
+    // this.uid = user_id;
+    this.uid = 0;
     this.loadCallCredentials(user.id, id);
     
   }
@@ -119,8 +120,8 @@ name: "Patient"
   /**
    * Attempts to connect to an online chat room where users can host and receive A/V streams.
    */
-  join(onSuccess?: (uid: number | string) => void, onFailure?: (error: Error) => void): void {
-    this.client.join(this.channelKey, this.channelName, this.uid, onSuccess, onFailure);
+  join(onSuccess?: (uid: number | string) => void, onFailure?: (error: Error) => void): void {  
+    this.client.join(null, this.channelName, this.uid, onSuccess, onFailure);
   }
 
   /**

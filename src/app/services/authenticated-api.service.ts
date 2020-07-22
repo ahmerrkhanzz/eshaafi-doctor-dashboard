@@ -12,7 +12,7 @@ import { Observable, throwError } from 'rxjs';
 })
 export class AuthenticatedApiService {
 
-  baseUri = 'https://api.eshaafi.com/dev/api';
+  baseUri = 'http://192.168.100.73:8000/api';
   authUser = this.authService.getAuthUser();
   authToken = this.authUser.token;
   headers = new HttpHeaders({
