@@ -21,7 +21,7 @@ import { VideoCallingService } from '../video-calling/video-calling.service';
 import { AuthenticatedApiService } from '../services/authenticated-api.service';
 import { AuthService } from '../services/auth.service';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
-import { GalleryPipe } from './doctors/doctor-appointments/appointments-table/gallery.pipe';
+
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import { GalleryPipe } from './doctors/doctor-appointments/appointments-table/ga
     AddDoctorComponent,
     DoctorAppointmentsComponent,
     UploadPrescriptionComponent,
-    GalleryPipe,
+
   ],
   imports: [
     CommonModule,
