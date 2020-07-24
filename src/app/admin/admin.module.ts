@@ -20,6 +20,8 @@ import { HelperService } from '../services/helper.service';
 import { VideoCallingService } from '../video-calling/video-calling.service';
 import { AuthenticatedApiService } from '../services/authenticated-api.service';
 import { AuthService } from '../services/auth.service';
+import { BrowserModule } from '@angular/platform-browser';
+import {NgxGalleryModule} from '@kolkov/ngx-gallery';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { AuthService } from '../services/auth.service';
     UiSwitchModule,
     AdminRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    BrowserModule,
+    NgxGalleryModule
     
   ],
   exports: [

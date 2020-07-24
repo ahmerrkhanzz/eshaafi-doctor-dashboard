@@ -100,10 +100,14 @@
             </td>
 
             <td>
-              <ul class="list-group list-group-horizontal d-flex">
+              <!-- <ul class="list-group list-group-horizontal d-flex">
                 <li *ngFor="let record of patient.files" class="list-group-item d-flex"><img
                     class="patient_record_img" [src]="record.file" alt=""></li>
-              </ul>
+              </ul> -->
+
+              <div class="gallery-wrapper">
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+              </div>
 
             </td>
             <td>
