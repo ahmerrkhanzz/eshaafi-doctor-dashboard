@@ -125,15 +125,11 @@
             </td>
 
             <td>
-              <!-- <ul class="list-group list-group-horizontal d-flex">
-                <li *ngFor="let record of patient.files" class="list-group-item d-flex"><img
-                    class="patient_record_img" [src]="record.file" alt=""></li>
-              </ul> -->
-
+       
               <div class="gallery-wrapper">
                 <ngx-gallery
                   [options]="galleryOptions"
-                  [images]="galleryImages"
+                  [images]="patient.patientGalleryImages || galleryImages"
                   class="ngx-gallery"
                 ></ngx-gallery>
               </div>
@@ -143,7 +139,7 @@
               <div class="gallery-wrapper">
                 <ngx-gallery
                   [options]="galleryOptions"
-                  [images]="galleryImages"
+                  [images]="patient.doctorGalleryImages || galleryImages"
                   class="ngx-gallery"
                 ></ngx-gallery>
               </div>

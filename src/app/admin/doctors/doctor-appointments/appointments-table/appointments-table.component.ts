@@ -2,15 +2,14 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UploadPrescriptionComponent } from "../upload-prescription/upload-prescription.component";
 import { Router } from "@angular/router";
-import { HelperService } from 'src/app/services/helper.service';
-import { AppointmentService } from '../services/appointment.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
-import {NgxGalleryImage} from '@kolkov/ngx-gallery';
-import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
-
+import { HelperService } from "src/app/services/helper.service";
+import { AppointmentService } from "../services/appointment.service";
+import { AuthService } from "src/app/services/auth.service";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { NgxGalleryOptions } from "@kolkov/ngx-gallery";
+import { NgxGalleryImage } from "@kolkov/ngx-gallery";
+import { NgxGalleryAnimation } from "@kolkov/ngx-gallery";
 
 @Component({
   selector: "app-appointments-table",
@@ -31,30 +30,31 @@ export class PatientsTableComponent implements OnInit {
   previous: any;
   authUser: any;
   appointmentsData: any;
+  appointmentsTemp: any;
   arrayObj: any;
   objectData: any;
-  filteredAppointments : any = [];
-  filteredstatus : any = [];
+  filteredAppointments: any = [];
+  filteredstatus: any = [];
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
   constructor(
     private _modalService: NgbModal,
-    private _router:Router,
+    private _router: Router,
     private helperService: HelperService,
     private appoitmentService: AppointmentService,
-    private authService: AuthService,
-    ) {}
+    private authService: AuthService
+  ) {}
   private unsubscribe: Subject<any> = new Subject();
   ngOnInit() {
     this.authUser = this.authService.getAuthUser();
     this.loadAppointments(this.authUser.id);
     this.status = [
-      { item_id: 'pending', item_text: "Pending" },
-      { item_id: 'canceled', item_text: "Cancelled" },
-      { item_id: 'not_appeared', item_text: "Not appeared"},
-      { item_id: 'completed', item_text: "Completed" },
+      { item_id: "pending", item_text: "Pending" },
+      { item_id: "canceled", item_text: "Cancelled" },
+      { item_id: "not_appeared", item_text: "Not appeared" },
+      { item_id: "completed", item_text: "Completed" },
     ];
 
     this.dropdownSettings = {
@@ -69,57 +69,71 @@ export class PatientsTableComponent implements OnInit {
 
     this.galleryOptions = [
       {
-        width: '600px',
-        height: '400px',
+        width: "600px",
+        height: "400px",
         thumbnailsColumns: 4,
-        arrowPrevIcon: 'fa fa-chevron-left',
-        arrowNextIcon: 'fa fa-chevron-right',
-        imageAnimation: NgxGalleryAnimation.Slide
+        arrowPrevIcon: "fa fa-chevron-left",
+        arrowNextIcon: "fa fa-chevron-right",
+        imageAnimation: NgxGalleryAnimation.Slide,
       },
       // max-width 800
       {
-        thumbnails: false
-      
+        thumbnails: false,
       },
       // max-width 400
       {
         breakpoint: 400,
-        preview: false
+        preview: false,
       },
-      
     ];
 
     this.galleryImages = [
       {
-        small: 'https://preview.ibb.co/jrsA6R/img12.jpg',
-        medium: 'https://preview.ibb.co/jrsA6R/img12.jpg',
-        big: 'https://preview.ibb.co/jrsA6R/img12.jpg'
+        small:
+          "assets/images/records/no-image-available.jpg",
+        medium:
+          "assets/images/records/no-image-available.jpg",
+        big:
+          "assets/images/records/no-image-available.jpg",
       },
-      {
-        small: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
-        medium: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
-        big: 'https://preview.ibb.co/kPE1D6/clouds.jpg'
-      },
-      {
-        small: 'https://preview.ibb.co/mwsA6R/img7.jpg',
-        medium: 'https://preview.ibb.co/mwsA6R/img7.jpg',
-        big: 'https://preview.ibb.co/mwsA6R/img7.jpg'
-      },{
-        small: 'https://preview.ibb.co/kZGsLm/img8.jpg',
-        medium: 'https://preview.ibb.co/kZGsLm/img8.jpg',
-        big: 'https://preview.ibb.co/kZGsLm/img8.jpg'
-      },      
+    
     ];
   }
 
   loadAppointments(id) {
-    this.appoitmentService.getAppointments(id)
-      .pipe(takeUntil(this.unsubscribe)).subscribe(
+    this.appoitmentService
+      .getAppointments(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
         (successResponse: any) => {
           this.appointments = successResponse.data;
           this.appointmentsData = successResponse.data;
           this.page = successResponse.current_page;
           this.total = successResponse.total;
+          this.appointments.forEach(element => {
+        let doctorImages = []
+           element.doctor_files.forEach(e => {
+             let temp= {
+               small: e.file,
+               medium: e.file,
+               big: e.file
+             }
+             doctorImages.push(temp)
+             element.doctorGalleryImages = doctorImages;
+           });
+           let patientImages = []
+        element.patient_files.forEach(e => {
+          let temp= {
+            small: e.file,
+            medium: e.file,
+            big: e.file
+          }
+          patientImages.push(temp)
+          element.patientGalleryImages = patientImages;
+          });
+          });
+       
+          console.log(this.appointments);
         },
         (errorResponse: any) => {
           console.log(errorResponse);
@@ -148,44 +162,49 @@ export class PatientsTableComponent implements OnInit {
       if (result) {
         console.log(result);
         console.log(this.appointments);
-        const ar = this.appointments.filter(e => e.appointment_id === id);
-        console.log(ar[0].files.concat(result));
-        let filess = ar[0].files.concat(result);
-        let index = this.appointments.findIndex(x => x.appointment_id === id);
-        this.appointments[index].files = filess;
+        const ar = this.appointments.filter((e) => e.appointment_id === id);
+        let temp = {
+          small: result,
+          medium: result,
+          big: result
+        }
+        console.log(ar[0].doctor_files.concat(temp));
+        let filess = ar[0].doctor_files.concat(temp);
+        let index = this.appointments.findIndex((x) => x.appointment_id === id);
+        this.appointments[index].doctor_files = filess;
       }
     });
     modalRef.componentInstance.appointment_id = id;
   }
-
   onItemDeSelect(item: any) {
-    if(this.appointments.length) {
-      let index = this.filteredstatus.findIndex(x => x === item.item_id);
+    if (this.appointments.length) {
+      let index = this.filteredstatus.findIndex((x) => x === item.item_id);
       this.filteredstatus.splice(index, 1);
       this.sortByStatus(this.filteredstatus, false);
-      if(this.filteredstatus.length === 0) {
+      if (this.filteredstatus.length === 0) {
         this.appointments = this.appointmentsData;
         this.filteredAppointments = [];
       }
     } else {
-      let index = this.filteredstatus.findIndex(x => x === item.item_id);
+      let index = this.filteredstatus.findIndex((x) => x === item.item_id);
       this.filteredstatus.splice(index, 1);
       this.appointments = this.appointmentsData;
     }
-    
   }
 
   videoCall(id: any) {
-    localStorage.setItem('appointment_id', id);
+    localStorage.setItem("appointment_id", id);
     this._router.navigate([`/videoCall`]);
   }
 
   changeStatus(id: any, appointment_status: any) {
     const user_id = this.authUser.id;
-    this.appoitmentService.changeAppointmentStatus(user_id, id, appointment_status.target.value)
-      .pipe(takeUntil(this.unsubscribe)).subscribe(
+    this.appoitmentService
+      .changeAppointmentStatus(user_id, id, appointment_status.target.value)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
         (successResponse: any) => {
-          this.helperService.showToast(successResponse.message, 'success');
+          this.helperService.showToast(successResponse.message, "success");
         },
         (errorResponse: any) => {
           console.log(errorResponse);
@@ -193,20 +212,19 @@ export class PatientsTableComponent implements OnInit {
       );
   }
 
-  sortByStatus(status: any , isSelect: any = true) {
+  sortByStatus(status: any, isSelect: any = true) {
     this.appointments = this.appointmentsData;
     this.filteredAppointments = [];
-    this.appointments.forEach(element => {
-      status.forEach(e => {
-        if(element.appointment_status === e) {
-          if(isSelect) {
+    this.appointments.forEach((element) => {
+      status.forEach((e) => {
+        if (element.appointment_status === e) {
+          if (isSelect) {
             this.filteredAppointments.push(element);
           } else {
             this.filteredAppointments.push(element);
-              // let index = this.filteredAppointments.findIndex(x => x.appointment_status === e);
-              // this.filteredAppointments.splice(index, 1);
+            // let index = this.filteredAppointments.findIndex(x => x.appointment_status === e);
+            // this.filteredAppointments.splice(index, 1);
           }
-          
         }
       });
     });
@@ -216,19 +234,21 @@ export class PatientsTableComponent implements OnInit {
 
   // get next and previous appointments
   getPageFromService() {
-    this.appoitmentService.getAppointmentsList(this.authUser.id, this.page)
-    .pipe(takeUntil(this.unsubscribe)).subscribe(
-    (successResponse: any) => {
-      this.appointments = successResponse.data;
-      this.appointmentsData = successResponse.data;
-      this.currentPage = successResponse.current_page;
-      this.total = successResponse.total;
-      this.next = successResponse.next;
-      this.previous = successResponse.previous;
-    },
-    (errorResponse: any) => {
-      console.log(errorResponse);
-    }
-  );
+    this.appoitmentService
+      .getAppointmentsList(this.authUser.id, this.page)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (successResponse: any) => {
+          this.appointments = successResponse.data;
+          this.appointmentsData = successResponse.data;
+          this.currentPage = successResponse.current_page;
+          this.total = successResponse.total;
+          this.next = successResponse.next;
+          this.previous = successResponse.previous;
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
   }
 }
