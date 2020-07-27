@@ -22,7 +22,7 @@ export class VideoCallingComponent implements OnInit {
   remoteCalls: string[] = [];
   patients:any[]=[
     {
-name: "Patient"
+      name: "Patient",
     }
   ]
   channelKey: any;
@@ -58,7 +58,7 @@ name: "Patient"
     this.videoCallingService.makeCall(id, appointment_id)
       .pipe(takeUntil(this.unsubscribe)).subscribe(
         (successResponse: any) => {
-          console.log(successResponse);
+          console.log(  );
           this.channelKey = successResponse.data.agora_token;
           this.channelName = successResponse.data.channel_name;
           this.isExpired = successResponse.data.is_expired;
@@ -73,7 +73,11 @@ name: "Patient"
             this.assignLocalStreamHandlers();
             // Join and publish methods added in this step
             this.initLocalStream(() => this.join(user_id => this.publish(), error => console.error(error)));
+          } else if (this.isExpired === false && this.canCall === false) {
+            this.helperService.showToast("Too early", 'error');
+            this._router.navigate([`/consultation`]);
           } else {
+            console.log('here');
             this.helperService.showToast("Time Expired", 'error');
             this._router.navigate([`/consultation`]);
           }
@@ -104,6 +108,9 @@ name: "Patient"
             this.assignLocalStreamHandlers();
             // Join and publish methods added in this step
             this.initLocalStream(() => this.join(user_id => this.publish(), error => console.error(error)));
+          } else if (this.isExpired === false && this.canCall === false) {
+            this.helperService.showToast("Too early", 'error');
+            this._router.navigate([`/consultation`]);
           } else {
             this.helperService.showToast("Time Expired", 'error');
             this._router.navigate([`/admin/online-consultation`]);
@@ -228,6 +235,26 @@ name: "Patient"
       console.log(err)
     });
     this._router.navigate(['/']);
+  }
+
+  audioCall() {
+    if(this.mic_on === false) {
+      this.mic_on = true;
+      this.localStream.disableAudio();
+    } else {
+      this.mic_on = false;
+      this.localStream.enableAudio();
+    }
+  }
+
+  videoCall() {
+    if(this.cam_on === false) {
+      this.cam_on = true;
+      this.localStream.disableVideo();
+    } else {
+      this.cam_on = false;
+      this.localStream.enableVideo();
+    }
   }
 }
 

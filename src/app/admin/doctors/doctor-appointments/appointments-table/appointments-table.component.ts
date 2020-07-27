@@ -7,6 +7,7 @@ import { AppointmentService } from '../services/appointment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { VideoCallingService } from 'src/app/video-calling/video-calling.service';
 
 @Component({
   selector: "app-appointments-table",
@@ -38,6 +39,7 @@ export class PatientsTableComponent implements OnInit {
     private helperService: HelperService,
     private appoitmentService: AppointmentService,
     private authService: AuthService,
+    private videoCallingService: VideoCallingService,
     ) {}
   private unsubscribe: Subject<any> = new Subject();
   ngOnInit() {
@@ -125,8 +127,7 @@ export class PatientsTableComponent implements OnInit {
   }
 
   videoCall(id: any) {
-    localStorage.setItem('appointment_id', id);
-    this._router.navigate([`/videoCall`]);
+    this.loadCallCredentials(this.authUser.id, id);
   }
 
   changeStatus(id: any, appointment_status: any) {
@@ -135,6 +136,26 @@ export class PatientsTableComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe)).subscribe(
         (successResponse: any) => {
           this.helperService.showToast(successResponse.message, 'success');
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+
+  loadCallCredentials(id: any, appointment_id: any) {
+    this.videoCallingService.makeCall(id, appointment_id)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(
+        (successResponse: any) => {
+          if(successResponse.data.is_expired === false && successResponse.data.can_call === true ) {
+            localStorage.setItem('appointment_id', appointment_id);
+            this._router.navigate([`/videoCall`]);
+          } else if (successResponse.data.is_expired === false && successResponse.data.can_call === false) {
+            this.helperService.showToast("Too early", 'error');
+          } else {
+            this.helperService.showToast("Time Expired", 'error');
+          }
+
         },
         (errorResponse: any) => {
           console.log(errorResponse);
