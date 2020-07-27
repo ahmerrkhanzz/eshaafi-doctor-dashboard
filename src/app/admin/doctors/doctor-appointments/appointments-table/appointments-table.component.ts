@@ -2,14 +2,15 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UploadPrescriptionComponent } from "../upload-prescription/upload-prescription.component";
 import { Router } from "@angular/router";
-import { HelperService } from "src/app/services/helper.service";
-import { AppointmentService } from "../services/appointment.service";
-import { AuthService } from "src/app/services/auth.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
 import { NgxGalleryOptions } from "@kolkov/ngx-gallery";
 import { NgxGalleryImage } from "@kolkov/ngx-gallery";
 import { NgxGalleryAnimation } from "@kolkov/ngx-gallery";
+import { VideoCallingService } from 'src/app/video-calling/video-calling.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { AppointmentService } from '../services/appointment.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: "app-appointments-table",
@@ -44,8 +45,9 @@ export class PatientsTableComponent implements OnInit {
     private _router: Router,
     private helperService: HelperService,
     private appoitmentService: AppointmentService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private videoCallingService: VideoCallingService,
+    ) {}
   private unsubscribe: Subject<any> = new Subject();
   ngOnInit() {
     this.authUser = this.authService.getAuthUser();
@@ -193,8 +195,7 @@ export class PatientsTableComponent implements OnInit {
   }
 
   videoCall(id: any) {
-    localStorage.setItem("appointment_id", id);
-    this._router.navigate([`/videoCall`]);
+    this.loadCallCredentials(this.authUser.id, id);
   }
 
   changeStatus(id: any, appointment_status: any) {
@@ -212,7 +213,27 @@ export class PatientsTableComponent implements OnInit {
       );
   }
 
-  sortByStatus(status: any, isSelect: any = true) {
+  loadCallCredentials(id: any, appointment_id: any) {
+    this.videoCallingService.makeCall(id, appointment_id)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(
+        (successResponse: any) => {
+          if(successResponse.data.is_expired === false && successResponse.data.can_call === true ) {
+            localStorage.setItem('appointment_id', appointment_id);
+            this._router.navigate([`/videoCall`]);
+          } else if (successResponse.data.is_expired === false && successResponse.data.can_call === false) {
+            this.helperService.showToast("Too early", 'error');
+          } else {
+            this.helperService.showToast("Time Expired", 'error');
+          }
+
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+
+  sortByStatus(status: any , isSelect: any = true) {
     this.appointments = this.appointmentsData;
     this.filteredAppointments = [];
     this.appointments.forEach((element) => {
