@@ -166,14 +166,14 @@ export class PatientsTableComponent implements OnInit {
         console.log(this.appointments);
         const ar = this.appointments.filter((e) => e.appointment_id === id);
         let temp = {
-          small: result,
-          medium: result,
-          big: result
+          small: result[0].file,
+          medium: result[0].file,
+          big: result[0].file,
         }
-        console.log(ar[0].doctor_files.concat(temp));
-        let filess = ar[0].doctor_files.concat(temp);
+        console.log(ar[0].doctorGalleryImages.concat(temp));
+        let filess = ar[0].doctorGalleryImages.concat(temp);
         let index = this.appointments.findIndex((x) => x.appointment_id === id);
-        this.appointments[index].doctor_files = filess;
+        this.appointments[index].doctorGalleryImages = filess;
       }
     });
     modalRef.componentInstance.appointment_id = id;
