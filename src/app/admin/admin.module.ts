@@ -21,6 +21,8 @@ import { VideoCallingService } from '../video-calling/video-calling.service';
 import { AuthenticatedApiService } from '../services/authenticated-api.service';
 import { AuthService } from '../services/auth.service';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
+import { FileUploadModule } from '@iplab/ngx-file-upload';
+
 
 
 
@@ -44,7 +46,8 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
     AdminRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
     NgxDropzoneModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    FileUploadModule
     
   ],
   exports: [

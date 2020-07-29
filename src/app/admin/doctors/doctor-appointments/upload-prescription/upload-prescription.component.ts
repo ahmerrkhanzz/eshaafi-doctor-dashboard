@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HelperService } from 'src/app/services/helper.service';
+import { FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
+
 
 @Component({
   selector: "app-upload-prescription",
@@ -15,7 +17,11 @@ export class UploadPrescriptionComponent implements OnInit {
   @Input() public appointment_id: any;
   public authUser: any;
   reports: any = [];
+  type= 1;
+  options: "";
   
+  public fileUploadControl = new FileUploadControl(FileUploadValidators.filesLimit(2));
+
   constructor(
     public activeModal: NgbActiveModal,
     private appointmentService: AppointmentService,

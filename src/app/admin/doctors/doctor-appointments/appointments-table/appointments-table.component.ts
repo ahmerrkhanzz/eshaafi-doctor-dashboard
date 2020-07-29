@@ -170,10 +170,10 @@ export class PatientsTableComponent implements OnInit {
           medium: result[0].file,
           big: result[0].file,
         }
-        console.log(ar[0].doctorGalleryImages.concat(temp));
-        let filess = ar[0].doctorGalleryImages.concat(temp);
-        let index = this.appointments.findIndex((x) => x.appointment_id === id);
+        let filess: any = ar[0].doctorGalleryImages.push(temp);
+        let index: any = this.appointments.findIndex((x) => x.appointment_id === id);
         this.appointments[index].doctorGalleryImages = filess;
+        console.log(this.appointments);
       }
     });
     modalRef.componentInstance.appointment_id = id;

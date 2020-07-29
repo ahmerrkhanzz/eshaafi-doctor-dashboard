@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
+    "@iplab/ngx-file-upload": "^2.0.7",
     "@kolkov/ngx-gallery": "^1.2.3",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "@ngu/carousel": "^2.0.3",
