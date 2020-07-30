@@ -57,22 +57,36 @@
           padding-right: 5rem;
         }
       }
-      .pdfLibrary{
-        ::ng-deep file-upload{
+      .pdfLibrary {
+        ::ng-deep file-upload {
           outline: none;
-          label{
-            file-upload-drop-zone{
-              .upload-text{
+          label {
+            file-upload-drop-zone {
+              .upload-text {
                 display: none;
               }
-              .icon{
-                height: 6rem;
-                width: 8rem;
+              .icon {
+                height: 4rem;
+                width: 4rem;
                 border: none;
               }
             }
           }
-
+          ::ng-deep .upload-list {
+            file-upload-list-item {
+              .file-buttons {
+                .remove-btn {
+                  svg{
+                    display: none;
+                  }
+                  button{
+                    padding: 0rem;
+                    border: none;
+                  }
+                }
+              }
+            }
+          }
         }
       }
 

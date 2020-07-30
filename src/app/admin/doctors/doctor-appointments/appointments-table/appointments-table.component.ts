@@ -5,12 +5,12 @@ import { Router } from "@angular/router";
 import { NgxGalleryOptions } from "@kolkov/ngx-gallery";
 import { NgxGalleryImage } from "@kolkov/ngx-gallery";
 import { NgxGalleryAnimation } from "@kolkov/ngx-gallery";
-import { VideoCallingService } from 'src/app/video-calling/video-calling.service';
-import { HelperService } from 'src/app/services/helper.service';
-import { AppointmentService } from '../services/appointment.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { VideoCallingService } from "src/app/video-calling/video-calling.service";
+import { HelperService } from "src/app/services/helper.service";
+import { AppointmentService } from "../services/appointment.service";
+import { AuthService } from "src/app/services/auth.service";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-appointments-table",
@@ -46,8 +46,8 @@ export class PatientsTableComponent implements OnInit {
     private helperService: HelperService,
     private appoitmentService: AppointmentService,
     private authService: AuthService,
-    private videoCallingService: VideoCallingService,
-    ) {}
+    private videoCallingService: VideoCallingService
+  ) {}
   private unsubscribe: Subject<any> = new Subject();
 
   ngOnInit() {
@@ -81,7 +81,8 @@ export class PatientsTableComponent implements OnInit {
       },
       // max-width 800
       {
-        thumbnails: false,
+        thumbnails: true,
+        thumbnailsAsLinks: true,
       },
       // max-width 400
       {
@@ -92,14 +93,10 @@ export class PatientsTableComponent implements OnInit {
 
     this.galleryImages = [
       {
-        small:
-          "assets/images/records/no-image-available.jpg",
-        medium:
-          "assets/images/records/no-image-available.jpg",
-        big:
-          "assets/images/records/no-image-available.jpg",
+        small: "assets/images/records/no-image-available.jpg",
+        medium: "assets/images/records/no-image-available.jpg",
+        big: "assets/images/records/no-image-available.jpg",
       },
-    
     ];
   }
 
@@ -113,29 +110,29 @@ export class PatientsTableComponent implements OnInit {
           this.appointmentsData = successResponse.data;
           this.page = successResponse.current_page;
           this.total = successResponse.total;
-          this.appointments.forEach(element => {
-        let doctorImages = []
-           element.doctor_files.forEach(e => {
-             let temp= {
-               small: e.file,
-               medium: e.file,
-               big: e.file
-             }
-             doctorImages.push(temp)
-             element.doctorGalleryImages = doctorImages;
-           });
-           let patientImages = []
-        element.patient_files.forEach(e => {
-          let temp= {
-            small: e.file,
-            medium: e.file,
-            big: e.file
-          }
-          patientImages.push(temp)
-          element.patientGalleryImages = patientImages;
+          this.appointments.forEach((element) => {
+            let doctorImages = [];
+            element.doctor_files.forEach((e) => {
+              let temp = {
+                small: e.file,
+                medium: e.file,
+                big: e.file,
+              };
+              doctorImages.push(temp);
+              element.doctorGalleryImages = doctorImages;
+            });
+            let patientImages = [];
+            element.patient_files.forEach((e) => {
+              let temp = {
+                small: e.file,
+                medium: e.file,
+                big: e.file,
+              };
+              patientImages.push(temp);
+              element.patientGalleryImages = patientImages;
+            });
           });
-          });
-       
+
           console.log(this.appointments);
         },
         (errorResponse: any) => {
@@ -170,9 +167,11 @@ export class PatientsTableComponent implements OnInit {
           small: result[0].file,
           medium: result[0].file,
           big: result[0].file,
-        }
+        };
         let filess: any = ar[0].doctorGalleryImages.concat(temp);
-        let index: any = this.appointments.findIndex((x) => x.appointment_id === id);
+        let index: any = this.appointments.findIndex(
+          (x) => x.appointment_id === id
+        );
         this.appointments[index].doctorGalleryImages = filess;
         console.log(this.appointments);
       }
@@ -215,18 +214,25 @@ export class PatientsTableComponent implements OnInit {
   }
 
   loadCallCredentials(id: any, appointment_id: any) {
-    this.videoCallingService.makeCall(id, appointment_id)
-      .pipe(takeUntil(this.unsubscribe)).subscribe(
+    this.videoCallingService
+      .makeCall(id, appointment_id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
         (successResponse: any) => {
-          if(successResponse.data.is_expired === false && successResponse.data.can_call === true ) {
-            localStorage.setItem('appointment_id', appointment_id);
+          if (
+            successResponse.data.is_expired === false &&
+            successResponse.data.can_call === true
+          ) {
+            localStorage.setItem("appointment_id", appointment_id);
             this._router.navigate([`/videoCall`]);
-          } else if (successResponse.data.is_expired === false && successResponse.data.can_call === false) {
-            this.helperService.showToast("Too early", 'error');
+          } else if (
+            successResponse.data.is_expired === false &&
+            successResponse.data.can_call === false
+          ) {
+            this.helperService.showToast("Too early", "error");
           } else {
-            this.helperService.showToast("Time Expired", 'error');
+            this.helperService.showToast("Time Expired", "error");
           }
-
         },
         (errorResponse: any) => {
           console.log(errorResponse);
@@ -234,7 +240,7 @@ export class PatientsTableComponent implements OnInit {
       );
   }
 
-  sortByStatus(status: any , isSelect: any = true) {
+  sortByStatus(status: any, isSelect: any = true) {
     this.appointments = this.appointmentsData;
     this.filteredAppointments = [];
     this.appointments.forEach((element) => {
@@ -274,12 +280,11 @@ export class PatientsTableComponent implements OnInit {
       );
   }
   //Loading PDF File in Browser New Tab
-  loadPDF(){
-let newUrl = 'http://africau.edu/images/default/sample.pdf';
-let currentUrl = window.location.href;
-window.open(currentUrl , '_blank');
-// on your current tab will be opened new url
-location.href = newUrl;
-
+  loadPDF() {
+    let newUrl = "http://africau.edu/images/default/sample.pdf";
+    let currentUrl = window.location.href;
+    window.open(currentUrl, "_blank");
+    // on your current tab will be opened new url
+    location.href = newUrl;
   }
 }
