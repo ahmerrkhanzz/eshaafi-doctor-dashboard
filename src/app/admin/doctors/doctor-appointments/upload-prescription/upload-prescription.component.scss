@@ -57,6 +57,24 @@
           padding-right: 5rem;
         }
       }
+      .pdfLibrary{
+        ::ng-deep file-upload{
+          outline: none;
+          label{
+            file-upload-drop-zone{
+              .upload-text{
+                display: none;
+              }
+              .icon{
+                height: 6rem;
+                width: 8rem;
+                border: none;
+              }
+            }
+          }
+
+        }
+      }
 
       &-signup {
         text-align: center;
