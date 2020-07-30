@@ -64,7 +64,19 @@ export class UploadPrescriptionComponent implements OnInit {
       console.log(this.reports);
     });
   }
-  
+  onRemovePDF(file: any) {
+    console.log(file);
+    console.log(this.uploadedFile);
+    this.readFile(this.uploadedFile[0]).then(fileContents => {
+      // Put this string in a request body to upload it to an API.
+      this.reports.array.forEach(element => {
+        if (element === fileContents) {
+          this.reports.splice(this.files.indexOf(fileContents[0]), 1);
+          this.files.splice(this.files.indexOf(fileContents[0]), 1);
+        }
+      });
+    });
+  }
   onRemove(event) {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
