@@ -273,4 +273,13 @@ export class PatientsTableComponent implements OnInit {
         }
       );
   }
+  //Loading PDF File in Browser New Tab
+  loadPDF(){
+let newUrl = 'http://africau.edu/images/default/sample.pdf';
+let currentUrl = window.location.href;
+window.open(currentUrl , '_blank');
+// on your current tab will be opened new url
+location.href = newUrl;
+
+  }
 }
