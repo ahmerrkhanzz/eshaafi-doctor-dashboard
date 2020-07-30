@@ -76,17 +76,9 @@
           [accept]="'.pdf'"
           (change)="onSelectPDF()"
           [(ngModel)]="uploadedFile"
-          ><ng-template
-            let-i="index"
-            let-file="file"
-            let-control="control"
-            #item
-          >
-            <file-upload-list-item [index]="i" [file]="file" [control]="control"
-              ><button (click)="onRemovePDF(file)">
-                <i class="fa fa-trash"></i></button
-            ></file-upload-list-item> </ng-template
-        ></file-upload>
+        ><ng-template let-i="index" let-file="file" let-control="control" #item>
+          <file-upload-list-item  [index]="i" [file]="file" [control]="control"><button class="btn btn-danger" removeFile (click)="onRemovePDF(i)">Remove</button></file-upload-list-item>
+      </ng-template></file-upload>
       </div>
 
       <div class="card-footer">
