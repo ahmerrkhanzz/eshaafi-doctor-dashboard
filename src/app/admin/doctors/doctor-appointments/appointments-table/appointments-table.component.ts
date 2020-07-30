@@ -49,6 +49,7 @@ export class PatientsTableComponent implements OnInit {
     private videoCallingService: VideoCallingService,
     ) {}
   private unsubscribe: Subject<any> = new Subject();
+
   ngOnInit() {
     this.authUser = this.authService.getAuthUser();
     this.loadAppointments(this.authUser.id);
@@ -170,7 +171,7 @@ export class PatientsTableComponent implements OnInit {
           medium: result[0].file,
           big: result[0].file,
         }
-        let filess: any = ar[0].doctorGalleryImages.push(temp);
+        let filess: any = ar[0].doctorGalleryImages.concat(temp);
         let index: any = this.appointments.findIndex((x) => x.appointment_id === id);
         this.appointments[index].doctorGalleryImages = filess;
         console.log(this.appointments);

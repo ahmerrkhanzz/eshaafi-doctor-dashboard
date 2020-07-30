@@ -75,6 +75,9 @@
         <file-upload
           [control]="fileUploadControl"
           [accept]="'.pdf'"
+          (change)="onSelectPDF()"
+          [(ngModel)]="uploadedFile"
+          
         ></file-upload>
       </div>
 
