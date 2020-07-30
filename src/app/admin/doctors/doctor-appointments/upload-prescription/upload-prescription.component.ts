@@ -43,42 +43,38 @@ export class UploadPrescriptionComponent implements OnInit {
   files: File[] = [];
 
   onSelectPDF() {
-    console.log(this.uploadedFile);
     // this.reports.push(this.uploadedFile[0]);
     // this.uploadedFiles.push(this.uploadedFile);
     // this.files.push(this.uploadedFile);
     this.readFile(this.uploadedFile[0]).then(fileContents => {
       // Put this string in a request body to upload it to an API.
       this.reports.push(fileContents);
-      console.log(this.reports);
     });
   }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
-   console.log(this.files);
+   
     this.readFile(this.files[0]).then(fileContents => {
       // Put this string in a request body to upload it to an API.
       this.reports.push(fileContents);
-      console.log(this.reports);
     });
   }
   onRemovePDF(file: any) {
-    console.log(file);
-    console.log(this.uploadedFile);
-    this.readFile(this.uploadedFile[0]).then(fileContents => {
-      // Put this string in a request body to upload it to an API.
-      this.reports.array.forEach(element => {
-        if (element === fileContents) {
-          this.reports.splice(this.files.indexOf(fileContents[0]), 1);
-          this.files.splice(this.files.indexOf(fileContents[0]), 1);
-        }
-      });
-    });
+    let index = this.reports.findIndex(x => x === file);
+    this.reports.splice(index, 1);
+    // this.readFile(file).then(fileContents => {
+    //   // Put this string in a request body to upload it to an API.
+    //   this.reports.forEach(element => {
+    //     if (element === fileContents) {
+    //       this.reports.splice(this.files.indexOf(fileContents[0]), 1);
+    //       this.files.splice(this.files.indexOf(fileContents[0]), 1);
+    //       console.log(this.reports);
+    //     }
+    //   });
+    // });
   }
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -101,7 +97,6 @@ export class UploadPrescriptionComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = e => {
-        console.log(e.target);
         return resolve((e.target as FileReader).result);
       };
 
