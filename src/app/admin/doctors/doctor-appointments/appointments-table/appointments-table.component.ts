@@ -81,8 +81,7 @@ export class PatientsTableComponent implements OnInit {
       },
       // max-width 800
       {
-        thumbnails: true,
-        thumbnailsAsLinks: true,
+        thumbnails: false,
       },
       // max-width 400
       {
@@ -113,23 +112,27 @@ export class PatientsTableComponent implements OnInit {
           this.appointments.forEach((element) => {
             let doctorImages = [];
             element.doctor_files.forEach((e) => {
-              let temp = {
-                small: e.file,
-                medium: e.file,
-                big: e.file,
-              };
-              doctorImages.push(temp);
-              element.doctorGalleryImages = doctorImages;
+              if (e.file_type === "image") {
+                let temp = {
+                  small: e.file,
+                  medium: e.file,
+                  big: e.file,
+                };
+                doctorImages.push(temp);
+                element.doctorGalleryImages = doctorImages;
+              }
             });
             let patientImages = [];
             element.patient_files.forEach((e) => {
-              let temp = {
-                small: e.file,
-                medium: e.file,
-                big: e.file,
-              };
-              patientImages.push(temp);
-              element.patientGalleryImages = patientImages;
+              if (e.file_type === "image") {
+                let temp = {
+                  small: e.file,
+                  medium: e.file,
+                  big: e.file,
+                };
+                patientImages.push(temp);
+                element.patientGalleryImages = patientImages;
+              }
             });
           });
 
@@ -286,5 +289,8 @@ export class PatientsTableComponent implements OnInit {
     window.open(currentUrl, "_blank");
     // on your current tab will be opened new url
     location.href = newUrl;
+  }
+  view(event) {
+    console.log(event);
   }
 }

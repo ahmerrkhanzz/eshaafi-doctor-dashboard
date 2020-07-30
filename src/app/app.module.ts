@@ -36,6 +36,7 @@ import { AuthenticatedApiService } from './services/authenticated-api.service';
     NgxNavDrawerModule,
     HttpClientModule,
     BrowserAnimationsModule,
+
   ],
   providers: [HelperService, AuthenticatedApiService],
   bootstrap: [AppComponent],

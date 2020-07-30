@@ -13,16 +13,15 @@ import { PatientsTableComponent } from "./doctors/doctor-appointments/appointmen
 import { AddDoctorComponent } from "./doctors/add-doctor/add-doctor.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { DoctorAppointmentsComponent } from "./doctors/doctor-appointments/doctor-appointments.component";
-import { UploadPrescriptionComponent } from './doctors/doctor-appointments/upload-prescription/upload-prescription.component';
-import { NgxDropzoneModule } from 'ngx-dropzone';
-import { AppointmentService } from './doctors/doctor-appointments/services/appointment.service';
-import { HelperService } from '../services/helper.service';
-import { VideoCallingService } from '../video-calling/video-calling.service';
-import { AuthenticatedApiService } from '../services/authenticated-api.service';
-import { AuthService } from '../services/auth.service';
-import {NgxGalleryModule} from '@kolkov/ngx-gallery';
-import { FileUploadModule } from '@iplab/ngx-file-upload';
-
+import { UploadPrescriptionComponent } from "./doctors/doctor-appointments/upload-prescription/upload-prescription.component";
+import { NgxDropzoneModule } from "ngx-dropzone";
+import { AppointmentService } from "./doctors/doctor-appointments/services/appointment.service";
+import { HelperService } from "../services/helper.service";
+import { VideoCallingService } from "../video-calling/video-calling.service";
+import { AuthenticatedApiService } from "../services/authenticated-api.service";
+import { AuthService } from "../services/auth.service";
+import { NgxGalleryModule } from "@kolkov/ngx-gallery";
+import { FileUploadModule } from "@iplab/ngx-file-upload";
 
 
 
@@ -37,7 +36,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     AddDoctorComponent,
     DoctorAppointmentsComponent,
     UploadPrescriptionComponent,
-
+    
   ],
   imports: [
     CommonModule,
@@ -47,7 +46,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     NgMultiSelectDropDownModule.forRoot(),
     NgxDropzoneModule,
     NgxGalleryModule,
-    FileUploadModule
+    FileUploadModule,
     
   ],
   exports: [
@@ -59,6 +58,12 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     PatientsTableComponent,
     AddDoctorComponent,
   ],
-  providers: [AppointmentService, HelperService, VideoCallingService, AuthenticatedApiService, AuthService],
+  providers: [
+    AppointmentService,
+    HelperService,
+    VideoCallingService,
+    AuthenticatedApiService,
+    AuthService,
+  ],
 })
 export class AdminModule {}
