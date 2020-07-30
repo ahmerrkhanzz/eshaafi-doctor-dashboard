@@ -21,6 +21,8 @@ export class UploadPrescriptionComponent implements OnInit {
   options: "";
   
   public fileUploadControl = new FileUploadControl(FileUploadValidators.filesLimit(2));
+  public uploadedFiles: Array<File> = [];
+  public uploadedFile: File;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -39,10 +41,23 @@ export class UploadPrescriptionComponent implements OnInit {
   }
 
   files: File[] = [];
- 
+
+  onSelectPDF() {
+    console.log(this.uploadedFile);
+    // this.reports.push(this.uploadedFile[0]);
+    // this.uploadedFiles.push(this.uploadedFile);
+    // this.files.push(this.uploadedFile);
+    this.readFile(this.uploadedFile[0]).then(fileContents => {
+      // Put this string in a request body to upload it to an API.
+      this.reports.push(fileContents);
+      console.log(this.reports);
+    });
+  }
+
   onSelect(event) {
     console.log(event);
     this.files.push(...event.addedFiles);
+   console.log(this.files);
     this.readFile(this.files[0]).then(fileContents => {
       // Put this string in a request body to upload it to an API.
       this.reports.push(fileContents);
@@ -69,12 +84,12 @@ export class UploadPrescriptionComponent implements OnInit {
     );
   }
 
-
   private async readFile(file: File): Promise<string | ArrayBuffer> {
     return new Promise<string | ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
 
       reader.onload = e => {
+        console.log(e.target);
         return resolve((e.target as FileReader).result);
       };
 
