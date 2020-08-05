@@ -129,8 +129,9 @@
                 <ngx-gallery
                   [options]="galleryOptions"
                   [images]="patient.patientGalleryImages || galleryImages"
-                  class="ngx-gallery" (change)="view($event)" (previewOpen)="view($event)"
-                ></ngx-gallery>
+                  class="ngx-gallery"
+                >
+                </ngx-gallery>
               </div>
             </td>
 
@@ -139,8 +140,9 @@
                 <ngx-gallery
                   [options]="galleryOptions"
                   [images]="patient.doctorGalleryImages || galleryImages"
-                  class="ngx-gallery" 
-                ></ngx-gallery>
+                  class="ngx-gallery"
+                >
+                </ngx-gallery>
               </div>
             </td>
             <td>
@@ -211,7 +213,6 @@
                     </g>
                   </svg>
                 </a>
-
               </div>
             </td>
           </tr>
