@@ -65,6 +65,20 @@
         color: black;
         background-color: $light-grey;
       }
+
+      .gallery-wrapper {
+        text-align: center;
+        height: 4rem !important;
+        :host ::ng-deep .ngx-gallery {
+          display: inline-block;
+          margin-bottom: 20px;
+ &-image{
+  :host ::ng-deep .ngx-gallery-icons{
+     display: none !important;
+   }
+ }
+        }
+      }
     }
     &-span {
       .symbol {
@@ -226,7 +240,7 @@
         align-items: center;
         border: 1px solid $wave-grey;
         border-radius: 0.42rem;
-        background-image: url("../../../../../assets/icons/filter-green.svg");
+        background-image: url("../../../../../assets/icons/ic_settings.svg");
         background-repeat: no-repeat;
 
         > span:first-child {
@@ -266,6 +280,7 @@
         border: 1px solid $border-grey;
         box-shadow: 0 0 30px 0 rgba(82, 63, 105, 0.05);
         width: 10rem;
+        left: -8rem;
         .item1 {
           display: none;
           li:first-child,

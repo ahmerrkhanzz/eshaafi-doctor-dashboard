@@ -12,23 +12,30 @@ export class AdminAsideComponent implements OnInit {
     {
       name: "Dashboard",
       icon: "fab fa-buffer",
+      routeName: "dashboard"
     },
     {
       name: "Online Consultations",
       icon: "fa fa-user",
+      routeName: "consultation"
     },
-    {
-      name: "Video Call",
-      icon: "fa fa-video-camera",
-    },
+  {
+    name: "Logout",
+    icon: "fas fa-sign-out-alt",
+    routeName: 'logout'
+  }
   ];
   constructor(private _router: Router) {}
 
   ngOnInit(): void {}
 
   tabClick(comp) {
-    console.log(comp);
-
-    this._router.navigate([`admin/${comp.name.toLowerCase()}`]);
+    if(comp.routeName === 'logout') 
+    {
+      localStorage.clear();
+      this._router.navigate([`/`]);
+    } else {
+      this._router.navigate([`/${comp.routeName.toLowerCase()}`]);
+    }
   }
 }

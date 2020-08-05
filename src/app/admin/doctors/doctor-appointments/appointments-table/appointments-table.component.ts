@@ -2,6 +2,16 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UploadPrescriptionComponent } from "../upload-prescription/upload-prescription.component";
 import { Router } from "@angular/router";
+import { NgxGalleryOptions } from "@kolkov/ngx-gallery";
+import { NgxGalleryImage } from "@kolkov/ngx-gallery";
+import { NgxGalleryAnimation } from "@kolkov/ngx-gallery";
+import { VideoCallingService } from "src/app/video-calling/video-calling.service";
+import { HelperService } from "src/app/services/helper.service";
+import { AppointmentService } from "../services/appointment.service";
+import { AuthService } from "src/app/services/auth.service";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
 @Component({
   selector: "app-appointments-table",
   templateUrl: "./appointments-table.component.html",
@@ -11,123 +21,45 @@ export class PatientsTableComponent implements OnInit {
   status = [];
   selectedItems = [];
   dropdownSettings = {};
-  appointments: any[] = [
-    {
-      name: "Ali khan",
-      phone: "+513225866369",
-      gender: "Male",
-      email: "bdagostini1v@cmu.edu",
-      time: "09:00AM",
-      date: "25-07-2020",
-      fee: "RS 1500/-",
-      feeStatus: "Paid",
-      img: "../../../../assets/images/users/p1.jpg",
-      records: [
-        "../../../../assets/images/records/1.jpg",
-        "../../../../assets/images/records/2.jpg",
-        "../../../../assets/images/records/3.jpg",
-      ],
-    },
-    {
-      name: "Steford chris",
-      phone: "+513225866369",
-      gender: "Male",
-      email: "bdagostini1v@cmu.edu",
-      time: "09:00AM",
-      date: "25-07-2020",
-      fee: "RS 1000/-",
-      feeStatus: "Paid",
-      img: "../../../../assets/images/users/p2.jpg",
-      records: [
-        "../../../../assets/images/records/1.jpg",
-        "../../../../assets/images/records/2.jpg",
-        "../../../../assets/images/records/3.jpg",
-      ],
-    },
+  appointments: any = {};
+  page: any;
+  pageSize: any;
+  perPage: any;
+  total: number = 0;
+  currentPage: any;
+  next: any;
+  previous: any;
+  authUser: any;
+  appointmentsData: any;
+  appointmentsTemp: any;
+  arrayObj: any;
+  objectData: any;
+  filteredAppointments: any = [];
+  filteredstatus: any = [];
 
-    {
-      name: "John Cena",
-      phone: "+513225866369",
-      gender: "Male",
-      email: "jc22@yehoo.edu",
-      time: "09:00AM",
-      date: "25-07-2020",
-      fee: "RS 2000/-",
-      feeStatus: "Paid",
-      img: "../../../../assets/images/users/p3.jpg",
-      records: [
-        "../../../../assets/images/records/1.jpg",
-        "../../../../assets/images/records/2.jpg",
-        "../../../../assets/images/records/3.jpg",
-      ],
-    },
+  galleryOptions: NgxGalleryOptions[];
+  galleryImages: NgxGalleryImage[];
 
-    {
-      name: "Stephene",
-      phone: "+513225866369",
-      gender: "Female",
-      email: "jc22@yehoo.edu",
-      time: "09:00AM",
-      date: "25-07-2020",
-      fee: "RS 500/-",
-      feeStatus: "Paid",
-      img: "../../../../assets/images/users/1.jpg",
-      records: [
-        "../../../../assets/images/records/1.jpg",
-        "../../../../assets/images/records/2.jpg",
-        "../../../../assets/images/records/3.jpg",
-      ],
-    },
-
-    {
-      name: "Mark Woods",
-      phone: "+513225866369",
-      gender: "Male",
-      email: "jc22@yehoo.edu",
-      time: "09:00AM",
-      date: "25-07-2020",
-      fee: "RS 1500/-",
-      feeStatus: "Paid",
-      img: "../../../../assets/images/users/2.jpg",
-      records: [
-        "../../../../assets/images/records/1.jpg",
-        "../../../../assets/images/records/2.jpg",
-        "../../../../assets/images/records/3.jpg",
-      ],
-    },
-
-    {
-      name: "Zebaco Miller",
-      phone: "+513225866369",
-      gender: "Male",
-      email: "jc22@yehoo.edu",
-      time: "09:00AM",
-      date: "25-07-2020",
-      fee: "RS 1000/-",
-      feeStatus: "Paid",
-      img: "../../../../assets/images/users/3.jpg",
-      records: [
-        "../../../../assets/images/records/1.jpg",
-        "../../../../assets/images/records/2.jpg",
-        "../../../../assets/images/records/3.jpg",
-      ],
-    },
-  ];
-
-  constructor(private _modalService: NgbModal, private _router:Router) {}
+  constructor(
+    private _modalService: NgbModal,
+    private _router: Router,
+    private helperService: HelperService,
+    private appoitmentService: AppointmentService,
+    private authService: AuthService,
+    private videoCallingService: VideoCallingService
+  ) {}
+  private unsubscribe: Subject<any> = new Subject();
 
   ngOnInit() {
+    this.authUser = this.authService.getAuthUser();
+    this.loadAppointments(this.authUser.id);
     this.status = [
-      { item_id: 1, item_text: "Pending" },
-      { item_id: 2, item_text: "Cancelled" },
-      { item_id: 3, item_text: "Not appeared" },
-      { item_id: 4, item_text: "Completed" },
+      { item_id: "pending", item_text: "Pending" },
+      { item_id: "canceled", item_text: "Cancelled" },
+      { item_id: "not_appeared", item_text: "Not appeared" },
+      { item_id: "completed", item_text: "Completed" },
     ];
 
-    this.selectedItems = [
-      { item_id: 3, item_text: "Pune" },
-      { item_id: 4, item_text: "Navsari" },
-    ];
     this.dropdownSettings = {
       singleSelection: false,
       idField: "item_id",
@@ -137,23 +69,228 @@ export class PatientsTableComponent implements OnInit {
       itemsShowLimit: 4,
       allowSearchFilter: true,
     };
+
+    this.galleryOptions = [
+      {
+        width: "600px",
+        height: "400px",
+        thumbnailsColumns: 4,
+        arrowPrevIcon: "fa fa-chevron-left",
+        arrowNextIcon: "fa fa-chevron-right",
+        imageAnimation: NgxGalleryAnimation.Slide,
+      },
+      // max-width 800
+      {
+        thumbnails: false,
+      },
+      // max-width 400
+      {
+        breakpoint: 400,
+        preview: false,
+      },
+    ];
+
+    this.galleryImages = [
+      {
+        small: "assets/images/records/no-image-available.jpg",
+        medium: "assets/images/records/no-image-available.jpg",
+        big: "assets/images/records/no-image-available.jpg",
+      },
+    ];
+  }
+
+  loadAppointments(id) {
+    this.appoitmentService
+      .getAppointments(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (successResponse: any) => {
+          this.appointments = successResponse.data;
+          this.appointmentsData = successResponse.data;
+          this.page = successResponse.current_page;
+          this.total = successResponse.total;
+          this.appointments.forEach((element) => {
+            let doctorImages = [];
+            element.doctor_files.forEach((e) => {
+              if (e.file_type === "image") {
+                let temp = {
+                  small: e.file,
+                  medium: e.file,
+                  big: e.file,
+                };
+                doctorImages.push(temp);
+                element.doctorGalleryImages = doctorImages;
+              }
+            });
+            let patientImages = [];
+            element.patient_files.forEach((e) => {
+              if (e.file_type === "image") {
+                let temp = {
+                  small: e.file,
+                  medium: e.file,
+                  big: e.file,
+                };
+                patientImages.push(temp);
+                element.patientGalleryImages = patientImages;
+              }
+            });
+          });
+
+          console.log(this.appointments);
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    console.log(this.filteredstatus);
+    if (!this.filteredstatus.some((x) => x == item.item_id)) {
+      this.filteredstatus.push(item.item_id);
+      this.sortByStatus(this.filteredstatus);
+    } else {
+      this.sortByStatus(this.filteredstatus);
+    }
   }
   onSelectAll(items: any) {
     console.log(items);
   }
-  addPrescription() {
+  addPrescription(id: any) {
+    console.log(id);
     const modalRef = this._modalService.open(UploadPrescriptionComponent, {
       size: "lg",
     });
-    modalRef.componentInstance.name = "World";
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log(result);
+        console.log(this.appointments);
+        const ar = this.appointments.filter((e) => e.appointment_id === id);
+        let temp = {
+          small: result[0].file,
+          medium: result[0].file,
+          big: result[0].file,
+        };
+        let filess: any = ar[0].doctorGalleryImages.concat(temp);
+        let index: any = this.appointments.findIndex(
+          (x) => x.appointment_id === id
+        );
+        this.appointments[index].doctorGalleryImages = filess;
+        console.log(this.appointments);
+      }
+    });
+    modalRef.componentInstance.appointment_id = id;
+  }
+  onItemDeSelect(item: any) {
+    if (this.appointments.length) {
+      let index = this.filteredstatus.findIndex((x) => x === item.item_id);
+      this.filteredstatus.splice(index, 1);
+      this.sortByStatus(this.filteredstatus, false);
+      if (this.filteredstatus.length === 0) {
+        this.appointments = this.appointmentsData;
+        this.filteredAppointments = [];
+      }
+    } else {
+      let index = this.filteredstatus.findIndex((x) => x === item.item_id);
+      this.filteredstatus.splice(index, 1);
+      this.appointments = this.appointmentsData;
+    }
   }
 
-  videoCall() {
-    this._router.navigate([`/admin/video-call`]);
+  videoCall(id: any) {
+    this.loadCallCredentials(this.authUser.id, id);
   }
 
+  changeStatus(id: any, appointment_status: any) {
+    const user_id = this.authUser.id;
+    this.appoitmentService
+      .changeAppointmentStatus(user_id, id, appointment_status.target.value)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (successResponse: any) => {
+          this.helperService.showToast(successResponse.message, "success");
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+
+  loadCallCredentials(id: any, appointment_id: any) {
+    this.videoCallingService
+      .makeCall(id, appointment_id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (successResponse: any) => {
+          if (
+            successResponse.data.is_expired === false &&
+            successResponse.data.can_call === true
+          ) {
+            localStorage.setItem("appointment_id", appointment_id);
+            this._router.navigate([`/videoCall`]);
+          } else if (
+            successResponse.data.is_expired === false &&
+            successResponse.data.can_call === false
+          ) {
+            this.helperService.showToast("Too early", "error");
+          } else {
+            this.helperService.showToast("Time Expired", "error");
+          }
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+
+  sortByStatus(status: any, isSelect: any = true) {
+    this.appointments = this.appointmentsData;
+    this.filteredAppointments = [];
+    this.appointments.forEach((element) => {
+      status.forEach((e) => {
+        if (element.appointment_status === e) {
+          if (isSelect) {
+            this.filteredAppointments.push(element);
+          } else {
+            this.filteredAppointments.push(element);
+            // let index = this.filteredAppointments.findIndex(x => x.appointment_status === e);
+            // this.filteredAppointments.splice(index, 1);
+          }
+        }
+      });
+    });
+    this.appointments = this.filteredAppointments;
+    console.log(this.appointments);
+  }
+
+  // get next and previous appointments
+  getPageFromService() {
+    this.appoitmentService
+      .getAppointmentsList(this.authUser.id, this.page)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (successResponse: any) => {
+          this.appointments = successResponse.data;
+          this.appointmentsData = successResponse.data;
+          this.currentPage = successResponse.current_page;
+          this.total = successResponse.total;
+          this.next = successResponse.next;
+          this.previous = successResponse.previous;
+        },
+        (errorResponse: any) => {
+          console.log(errorResponse);
+        }
+      );
+  }
+  //Loading PDF File in Browser New Tab
+  loadPDF() {
+    let newUrl = "http://africau.edu/images/default/sample.pdf";
+    let currentUrl = window.location.href;
+    window.open(currentUrl, "_blank");
+    // on your current tab will be opened new url
+    location.href = newUrl;
+  }
+  view(event) {
+    console.log(event);
+  }
 }

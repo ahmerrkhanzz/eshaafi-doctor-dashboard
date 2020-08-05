@@ -9,7 +9,7 @@ const routes: Routes = [
     loadChildren: "./pages/pages.module#PagesModule",
   },
   {
-    path: "admin",
+    path: "",
     loadChildren: "./admin/admin.module#AdminModule",
   },
   {

@@ -16,19 +16,19 @@ export class DashboardComponent implements OnInit {
     {
       icon: 'doctor-equipment',
       value: 32,
-      title: 'Registered Doctors',
+      title: 'Total Office Visits',
       class: 'blue'
     },
     {
       icon: 'doctor-list',
-      value: 148,
-      title: 'Patients Visited Today',
+      value: 4,
+      title: 'Pending Consultations',
       class: 'green'
     },
     {
       icon: 'online-consultation',
       value: 48,
-      title: 'Total Consultations',
+      title: 'Completed Consultations',
       class: 'blue'
     }
   ]

@@ -5,6 +5,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { DoctorsComponent } from "./doctors/doctors.component";
 import { VideoCallingComponent } from '../video-calling/video-calling.component';
 
+
 const routes: Routes = [
   {
     path: "",
@@ -19,13 +20,14 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: "online-consultation",
+        path: "consultation",
         component: DoctorsComponent,
       },
       {
-        path:"video-call",
+        path:"videoCall",
         component: VideoCallingComponent
-      }
+      },
+     
     ],
   },
 ];

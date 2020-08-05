@@ -3,7 +3,6 @@
 .card {
   position: relative;
   &-body {
-   
     background-position: center;
     border-radius: 0.42rem;
     display: flex;
@@ -20,6 +19,9 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      .radioButton {
+        align-items: center;
+      }
       &-title {
         display: flex;
         justify-content: center;
@@ -41,19 +43,54 @@
           margin-bottom: 1.8rem;
           width: 10rem;
         }
-       
+      }
+      .imageLibrary {
+        .custom-dropzone {
+          border: none !important;
+          img {
+            height: 6rem;
+          }
+        }
+      }
+      .row {
+        :first-child {
+          padding-right: 5rem;
+        }
+      }
+      .pdfLibrary {
+        ::ng-deep file-upload {
+          outline: none;
+          label {
+            file-upload-drop-zone {
+              .upload-text {
+                display: none;
+              }
+              .icon {
+                height: 4rem;
+                width: 4rem;
+                border: none;
+              }
+            }
+          }
+          ::ng-deep .upload-list {
+            file-upload-list-item {
+              .file-buttons {
+                .remove-btn {
+                  svg{
+                    display: none;
+                  }
+                  button{
+                    padding: 0rem;
+                    border: none;
+                    margin-left: -2rem;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
 
-.image-container{
-  flex-direction: row;
-  display: flex;
-  .ngx-dropzone-image-preview{
-    flex-direction: row;
-    display: flex;
-  }
-}
-        
-    
       &-signup {
         text-align: center;
         margin-top: 2rem;
@@ -119,4 +156,3 @@
     align-items: center;
   }
 }
-
