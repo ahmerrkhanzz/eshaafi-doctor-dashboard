@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UploadPrescriptionComponent } from "../upload-prescription/upload-prescription.component";
 import { Router } from "@angular/router";
-import { NgxGalleryOptions } from "@kolkov/ngx-gallery";
+import { NgxGalleryOptions, NgxGalleryAction } from "@kolkov/ngx-gallery";
 import { NgxGalleryImage } from "@kolkov/ngx-gallery";
 import { NgxGalleryAnimation } from "@kolkov/ngx-gallery";
 import { VideoCallingService } from "src/app/video-calling/video-calling.service";
@@ -21,7 +21,7 @@ export class PatientsTableComponent implements OnInit {
   status = [];
   selectedItems = [];
   dropdownSettings = {};
-  appointments: any = {};
+  appointments: any[] = [];
   page: any;
   pageSize: any;
   perPage: any;
@@ -74,10 +74,20 @@ export class PatientsTableComponent implements OnInit {
       {
         width: "600px",
         height: "400px",
+        startIndex: 0,
         thumbnailsColumns: 4,
         arrowPrevIcon: "fa fa-chevron-left",
         arrowNextIcon: "fa fa-chevron-right",
         imageAnimation: NgxGalleryAnimation.Slide,
+        thumbnailsAsLinks: true,
+        imageDescription: true,
+        thumbnailActions: [
+          {
+            icon: "fa fa-arrow-circle-right",
+            onClick: this.deleteImage.bind(this),
+            titleText: "delete",
+          },
+        ],
       },
       // max-width 800
       {
@@ -104,35 +114,60 @@ export class PatientsTableComponent implements OnInit {
       .getAppointments(id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (successResponse: any) => {
-          this.appointments = successResponse.data;
-          this.appointmentsData = successResponse.data;
-          this.page = successResponse.current_page;
-          this.total = successResponse.total;
+        (res: any) => {
+          const { data, current_page, total } = res;
+          this.appointments = data;
+          this.appointmentsData = data;
+          this.page = current_page;
+          this.total = total;
           this.appointments.forEach((element) => {
             let doctorImages = [];
             element.doctor_files.forEach((e) => {
-              if (e.file_type === "image") {
-                let temp = {
-                  small: e.file,
-                  medium: e.file,
-                  big: e.file,
-                };
-                doctorImages.push(temp);
-                element.doctorGalleryImages = doctorImages;
-              }
+              let temp = {
+                small:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                medium:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                big:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                url: e.file,
+                description:
+                  e.file_type !== "image"
+                    ? `<a class="btn btn-outline-primary" href="${e.file}" target="_blank">Open PDF</a>`
+                    : "",
+              };
+              doctorImages.push(temp);
+              element.doctorGalleryImages = doctorImages;
             });
             let patientImages = [];
             element.patient_files.forEach((e) => {
-              if (e.file_type === "image") {
-                let temp = {
-                  small: e.file,
-                  medium: e.file,
-                  big: e.file,
-                };
-                patientImages.push(temp);
-                element.patientGalleryImages = patientImages;
-              }
+              let temp = {
+                small:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                medium:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                big:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                url: e.file,
+                description:
+                  e.file_type !== "image"
+                    ? `<a class="btn btn-outline-primary" href="${e.file}" target="_blank">Open PDF</a>`
+                    : "",
+              };
+              patientImages.push(temp);
+              element.patientGalleryImages = patientImages;
             });
           });
 
@@ -143,7 +178,9 @@ export class PatientsTableComponent implements OnInit {
         }
       );
   }
-
+  deleteImage() {
+    console.log("clicked");
+  }
   onItemSelect(item: any) {
     console.log(this.filteredstatus);
     if (!this.filteredstatus.some((x) => x == item.item_id)) {
@@ -291,6 +328,10 @@ export class PatientsTableComponent implements OnInit {
     location.href = newUrl;
   }
   view(event) {
+    console.log(event);
+  }
+
+  onImageChange(event) {
     console.log(event);
   }
 }

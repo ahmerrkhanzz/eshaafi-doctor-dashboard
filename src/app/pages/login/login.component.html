@@ -35,7 +35,7 @@
           >
           <a href="javascript:;" class="text-muted">Forget Password ?</a>
         </div>
-        <button type="submit" class="btn btn-light-primary mt-4">
+        <button [disabled]="loginForm.invalid" type="submit" class="btn btn-light-primary mt-4">
           Sign In
         </button>
       </form>

@@ -109,6 +109,7 @@
                       id="peeps"
                       ngbDropdown
                       name="people"
+                      class="form-control custom-select"
                       (change)="changeStatus(patient.appointment_id, $event)"
                       [(ngModel)]="patient.appointment_status"
                     >
@@ -129,8 +130,9 @@
                 <ngx-gallery
                   [options]="galleryOptions"
                   [images]="patient.patientGalleryImages || galleryImages"
-                  class="ngx-gallery" (change)="view($event)" (previewOpen)="view($event)"
-                ></ngx-gallery>
+                  class="ngx-gallery"
+                >
+                </ngx-gallery>
               </div>
             </td>
 
@@ -139,8 +141,9 @@
                 <ngx-gallery
                   [options]="galleryOptions"
                   [images]="patient.doctorGalleryImages || galleryImages"
-                  class="ngx-gallery" 
-                ></ngx-gallery>
+                  class="ngx-gallery"
+                >
+                </ngx-gallery>
               </div>
             </td>
             <td>
@@ -211,7 +214,6 @@
                     </g>
                   </svg>
                 </a>
-
               </div>
             </td>
           </tr>
@@ -219,14 +221,14 @@
       </table>
     </div>
     <!--end: Datatable-->
-    <div class="card-body-paging">
+    <!-- <div class="card-body-paging">
       <ngb-pagination
         (pageChange)="getPageFromService()"
-        [collectionSize]="this.total"
+        [collectionSize]="total"
         [(page)]="page"
         [boundaryLinks]="true"
       ></ngb-pagination>
-    </div>
+    </div> -->
   </div>
   <!--end::Body-->
 </div>

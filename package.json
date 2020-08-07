@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --aot=true --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -44,6 +44,7 @@
     "ngx-toastr": "^13.0.0",
     "ngx-toggle-switch": "^2.0.5",
     "ngx-upload-image": "0.0.4",
+    "pdfjs": "^2.3.9",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

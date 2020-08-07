@@ -66,13 +66,13 @@
   }
   &-outline {
     &-primary {
-      color: $color-secondary;
-      border-color: $color-secondary;
+      color: $color-primary;
+      border-color: $color-primary;
       background: transparent;
       &:hover {
         color: #fff;
-        background: $color-secondary;
-        border-color: $color-secondary;
+        background: $color-primary;
+        border-color: $color-primary;
       }
     }
   }
