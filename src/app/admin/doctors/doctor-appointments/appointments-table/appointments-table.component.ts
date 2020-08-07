@@ -147,15 +147,27 @@ export class PatientsTableComponent implements OnInit {
             });
             let patientImages = [];
             element.patient_files.forEach((e) => {
-              if (e.file_type === "image") {
-                let temp = {
-                  small: e.file,
-                  medium: e.file,
-                  big: e.file,
-                };
-                patientImages.push(temp);
-                element.patientGalleryImages = patientImages;
-              }
+              let temp = {
+                small:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                medium:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                big:
+                  e.file_type === "image"
+                    ? e.file
+                    : "../../../../../assets/images/pdf-placeholder.jpg",
+                url: e.file,
+                description:
+                  e.file_type !== "image"
+                    ? `<a class="btn btn-outline-primary" href="${e.file}" target="_blank">Open PDF</a>`
+                    : "",
+              };
+              patientImages.push(temp);
+              element.patientGalleryImages = patientImages;
             });
           });
 
