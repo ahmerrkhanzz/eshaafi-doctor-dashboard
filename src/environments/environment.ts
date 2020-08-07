@@ -1,12 +1,12 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+import { agorAppId } from "../constants";
 export const environment = {
   production: false,
   agora: {
-    appId: '8a5cb4b9617e49dba586ebc34c81cb25'
-  }
+    appId: agorAppId,
+  },
 };
 
 /*
