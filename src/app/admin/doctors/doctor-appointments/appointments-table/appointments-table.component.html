@@ -109,6 +109,7 @@
                       id="peeps"
                       ngbDropdown
                       name="people"
+                      class="form-control custom-select"
                       (change)="changeStatus(patient.appointment_id, $event)"
                       [(ngModel)]="patient.appointment_status"
                     >
@@ -220,14 +221,14 @@
       </table>
     </div>
     <!--end: Datatable-->
-    <div class="card-body-paging">
+    <!-- <div class="card-body-paging">
       <ngb-pagination
         (pageChange)="getPageFromService()"
-        [collectionSize]="this.total"
+        [collectionSize]="total"
         [(page)]="page"
         [boundaryLinks]="true"
       ></ngb-pagination>
-    </div>
+    </div> -->
   </div>
   <!--end::Body-->
 </div>

@@ -1,32 +1,47 @@
-import { Component, OnInit, NgZone, EventEmitter, Input, Output  } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { from } from 'rxjs';
-import { HelperService } from 'src/app/services/helper.service';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  EventEmitter,
+  Input,
+  Output,
+} from "@angular/core";
+import {
+  FormBuilder,
+  Validators,
+  FormGroup,
+  FormsModule,
+  FormControl,
+  ReactiveFormsModule,
+} from "@angular/forms";
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { ToastrService } from "ngx-toastr";
+import { from } from "rxjs";
+import { HelperService } from "src/app/services/helper.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
-  constructor(private _router:Router,
+  constructor(
+    private _router: Router,
     private fb: FormBuilder,
-    private toast: ToastrService,
     private authService: AuthService,
     public router: Router,
-    private ngZone: NgZone,
     private helperService: HelperService,
-    ) { }
+    private _toast: ToastrService
+  ) {}
 
   ngOnInit() {
-    
     this.loginForm = this.fb.group({
-      user_name: new FormControl('', {validators: [Validators.required]}),
-      password:  new FormControl('', {validators:[Validators.minLength(6), Validators.maxLength(12)]})
+      user_name: new FormControl("", { validators: [Validators.required] }),
+      password: new FormControl("", {
+        validators: [Validators.minLength(6), Validators.maxLength(12)],
+      }),
     });
   }
 
@@ -37,15 +52,18 @@ export class LoginComponent implements OnInit {
     }
   }
   submitForm() {
-   this.helperService.validateAllFormFields(this.loginForm);
+
+    console.log(this.loginForm);
+    
+    this.helperService.validateAllFormFields(this.loginForm);
     if (this.loginForm.invalid) {
-      this.helperService.showToast('All fields are required!', 'error');
+      this._toast.error("All fields are required!", "Error");
       return;
     }
 
     const formData = this.loginForm.value;
 
-    this.authService.login(formData).subscribe( 
+    this.authService.login(formData).subscribe(
       (success: any) => {
         const userDetails = success.data;
         this.authService.setAuthUser(userDetails);
@@ -55,23 +73,21 @@ export class LoginComponent implements OnInit {
       (error: any) => {
         console.log(error.error.message);
         const errors_array = error.error.errors;
-        for(let key in errors_array) {
+        for (let key in errors_array) {
           // if key has nested "errors", get and set the error message, else set null
-          this.toast.error(errors_array[key]);
+          this._toast.error(errors_array[key], 'Error');
         }
-        
+
         if (!error.error.error) {
-          this.helperService.showToast(error.error.message, 'error');
+          this._toast.error(error.error.message, 'Error');
         } else {
-          this.helperService.showToast(error.error.message, 'error');
+          this._toast.error(error.error.message, 'Error');
         }
       }
     );
-
   }
 
   loginHandler() {
     this._router.navigate([`/consultation`]);
   }
-
 }
