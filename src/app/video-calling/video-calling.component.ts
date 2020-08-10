@@ -32,7 +32,7 @@ export class VideoCallingComponent implements OnInit {
 
   private client: AgoraClient;
   private localStream: Stream;
-  private uid: string = '957fccca011c4bb089ab269d0f12a753';
+  private uid: any;
 
   constructor(
     private ngxAgoraService: NgxAgoraService,
@@ -49,7 +49,7 @@ export class VideoCallingComponent implements OnInit {
     const id = localStorage.getItem('appointment_id');
     const user = this.authService.getAuthUser();
     let user_id = user.id;
-    // this.uid = user_id;
+    this.uid = user_id;
     // this.uid = 0;
     this.loadCallCredentials(user.id, id);
     
