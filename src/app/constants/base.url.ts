@@ -1,5 +1,5 @@
 import { environment } from "../../environments/environment";
-import { MAIN_API_BASE_URL } from "../../constants";
+import { MAIN_API_BASE_URL } from "../../../constants";
 
 export var baseApi: string = "";
 export var baseExternalAssets: string = "";

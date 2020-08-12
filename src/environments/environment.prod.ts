@@ -1,4 +1,4 @@
-import { agorAppId } from "../constants";
+import { agorAppId } from "../../constants";
 
 export const environment = {
   production: true,
