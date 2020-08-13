@@ -7,31 +7,34 @@ import { Router } from "@angular/router";
   styleUrls: ["./admin-aside.component.scss"],
 })
 export class AdminAsideComponent implements OnInit {
-  
   public navList = [
     {
       name: "Dashboard",
       icon: "fab fa-buffer",
-      routeName: "dashboard"
+      routeName: "dashboard",
+    },
+    {
+      name: "My Profile",
+      icon: "fa fa-user",
+      routeName: "profile",
     },
     {
       name: "Online Consultations",
       icon: "fa fa-user",
-      routeName: "consultation"
+      routeName: "consultation",
     },
-  {
-    name: "Logout",
-    icon: "fas fa-sign-out-alt",
-    routeName: 'logout'
-  }
+    {
+      name: "Logout",
+      icon: "fas fa-sign-out-alt",
+      routeName: "logout",
+    },
   ];
   constructor(private _router: Router) {}
 
   ngOnInit(): void {}
 
   tabClick(comp) {
-    if(comp.routeName === 'logout') 
-    {
+    if (comp.routeName === "logout") {
       localStorage.clear();
       this._router.navigate([`/`]);
     } else {

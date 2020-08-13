@@ -22,6 +22,7 @@ import { AuthenticatedApiService } from "../services/authenticated-api.service";
 import { AuthService } from "../services/auth.service";
 import { NgxGalleryModule } from "@kolkov/ngx-gallery";
 import { FileUploadModule } from "@iplab/ngx-file-upload";
+import { ProfileModule } from './profile/profile.module';
 
 
 
@@ -47,6 +48,7 @@ import { FileUploadModule } from "@iplab/ngx-file-upload";
     NgxDropzoneModule,
     NgxGalleryModule,
     FileUploadModule,
+    ProfileModule,
     
   ],
   exports: [
