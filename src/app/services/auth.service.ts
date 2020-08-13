@@ -3,13 +3,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import {MAIN_API_BASE_URL} from '../../../constants'
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  hostUri = 'https://api.eshaafi.com/api';
+  hostUri = MAIN_API_BASE_URL;
   constructor(
     private router: Router,
     private httpClient: HttpClient,

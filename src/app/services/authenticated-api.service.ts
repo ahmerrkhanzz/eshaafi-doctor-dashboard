@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import { HelperService } from './helper.service';
 import { Observable, throwError } from 'rxjs';
+import {MAIN_API_BASE_URL} from '../../../constants'
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { Observable, throwError } from 'rxjs';
 export class AuthenticatedApiService {
 
   // baseUri = 'http://192.168.100.73:8000/api';
-  baseUri = 'https://api.eshaafi.com/api';
+  baseUri = MAIN_API_BASE_URL;
   authUser = this.authService.getAuthUser();
   authToken = this.authUser.token;
   headers = new HttpHeaders({
