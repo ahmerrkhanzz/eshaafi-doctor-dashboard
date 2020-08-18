@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { LoginComponent } from 'src/app/pages/login/login.component';
+import { LoginComponent } from '../../admin/login/login.component';
 
 @Component({
   selector: "app-topnav",

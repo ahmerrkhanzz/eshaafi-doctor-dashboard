@@ -3,43 +3,39 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { PagesComponent } from "./pages/pages.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { PagesModule } from "./pages/pages.module";
 import { SharedModule } from "./components/shared.module";
 import { NotFoundComponent } from "./not-found/not-found.component";
-import { AdminModule } from "./admin/admin.module";
-import { environment } from 'src/environments/environment';
-import { NgxAgoraModule } from 'ngx-agora';
-import { VideoCallingComponent } from './video-calling/video-calling.component';
-import { NgxNavDrawerModule } from 'ngx-nav-drawer';
-import { HttpClientModule } from '@angular/common/http';
-import { HelperService } from './services/helper.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticatedApiService } from './services/authenticated-api.service';
+import { environment } from "src/environments/environment";
+import { NgxAgoraModule } from "ngx-agora";
+import { VideoCallingComponent } from "./video-calling/video-calling.component";
+import { NgxNavDrawerModule } from "ngx-nav-drawer";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HelperService } from "./services/helper.service";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AuthenticatedApiService } from "./services/authenticated-api.service";
+import { HeaderInterceptor } from "./constants/interceptor.service";
+import { PagesModule } from './admin/pages.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PagesComponent,
-    NotFoundComponent,
-    VideoCallingComponent,
-  ],
+  declarations: [AppComponent, NotFoundComponent, VideoCallingComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    PagesModule,
     SharedModule,
-    AdminModule,
+    PagesModule,
     NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
     NgxNavDrawerModule,
     HttpClientModule,
     BrowserAnimationsModule,
-
   ],
-  providers: [HelperService, AuthenticatedApiService],
+  providers: [
+    HelperService,
+    AuthenticatedApiService,
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
-  exports: [NotFoundComponent,VideoCallingComponent],
+  exports: [NotFoundComponent, VideoCallingComponent],
 })
 export class AppModule {}

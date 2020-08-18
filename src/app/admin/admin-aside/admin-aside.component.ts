@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { PagesService } from "../pages.service";
 
 @Component({
   selector: "app-admin-aside",
@@ -29,14 +30,22 @@ export class AdminAsideComponent implements OnInit {
       routeName: "logout",
     },
   ];
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _pagesService: PagesService) {}
 
   ngOnInit(): void {}
 
   tabClick(comp) {
     if (comp.routeName === "logout") {
-      localStorage.clear();
-      this._router.navigate([`/`]);
+      this._pagesService.logout().subscribe(
+        (res: any) => {
+          console.log(res);
+          this._router.navigate([`/`]);
+          // localStorage.clear();
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
     } else {
       this._router.navigate([`/${comp.routeName.toLowerCase()}`]);
     }
