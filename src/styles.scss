@@ -10,6 +10,7 @@ html {
   // font-family: "Open Sans", sans-serif;
   font-size: 0.9rem;
   background: $bg-grey;
+  height: 100%;
 }
 
 .toast-container .ngx-toastr {
@@ -30,6 +31,12 @@ html {
   background-color: #fee9ec;
   color: #f64e60 !important;
 }
+
 #toast-container > .toast-success {
   background-image: url(./assets/icons/check_new.png) !important;
+}
+@media only screen and (min-width: 1200px) {
+  .container {
+    max-width: 1340px;
+  }
 }

@@ -1,35 +1,32 @@
 // THEME COLORS
-$color-primary: #00578c; 
+$color-primary: #0077B6;
 $color-secondary: #00b8ae;
 $color-warning: #ffa800;
 $color-danger: #f64e60;
-$color-white: #ffffff;
-$color-dark: #0f4464;
-$dark-overlay: #595A5A;
 
 $color-light-warning: #fff5e0;
 $color-light-danger: #fee9ec;
-$color-primary-light: #cbe5ff;
-$color-primary-disabled: #3699FF;
-$color-secondary-disabled: #1BC5BD;
+$color-primary-light: #CAF0F8;
 $color-secondary-light: #c9f7f5;
 $color-danger-light: #fee2e5;
 
-$bg-grey: #F1F3F9;
+$bg-grey: #f1f3f9;
+$video-bg: #0f4464;
 $border-grey: #ebedf3;
 $light-grey: #ecf1f6;
 
 // BUTTONS
-$btn-secondary: #e4e6ef;
-$btn-secondary-hover: #1078b7;
-$btn-primary-hover: #1d9690;
+$btn-default: #e4e6ef;
+$btn-default-hover: #d7dae7;
+$btn-secondary: $color-secondary;
+$btn-secondary-hover: #1d9690;
+$btn-primary-hover: #00578c;
 
 //TEXT
 $text-grey: #7e8299;
 $text-muted: #b5b5c3;
 $text-dark: #212529;
 $text-purple: #3f4254;
-$text-header: #181C32;
 
 //CARDS-WAVE
 $wave-grey: #f3f6f9;

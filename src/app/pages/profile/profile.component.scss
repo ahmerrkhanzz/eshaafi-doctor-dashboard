@@ -1,0 +1,36 @@
+@import "../../../assets/scss/_variables.scss";
+
+.profile {
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+  &-basic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-bottom: 1px dashed $text-muted;
+    &-image {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+    p {
+      margin: 0;
+    }
+  }
+  .nav {
+    &-tabs {
+      padding: 1.5rem 0;
+    }
+    &-link {
+      &.active {
+        border: none;
+      }
+    }
+  }
+}

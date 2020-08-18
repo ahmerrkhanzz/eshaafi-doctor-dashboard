@@ -15,7 +15,7 @@ import { HelperService } from "./services/helper.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthenticatedApiService } from "./services/authenticated-api.service";
 import { HeaderInterceptor } from "./constants/interceptor.service";
-import { PagesModule } from './admin/pages.module';
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, VideoCallingComponent],

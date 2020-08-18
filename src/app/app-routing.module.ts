@@ -6,11 +6,11 @@ import { VideoCallingComponent } from "./video-calling/video-calling.component";
 const routes: Routes = [
   {
     path: "",
-    loadChildren: "./admin/login/login.module#LoginModule",
+    loadChildren: "./pages/login/login.module#LoginModule",
   },
   {
     path: "",
-    loadChildren: "./admin/pages.module#PagesModule",
+    loadChildren: "./pages/pages.module#PagesModule",
   },
   {
     path: "not-found",
